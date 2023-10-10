@@ -10,8 +10,11 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Login'),
       ),
-      body: const Center(
-        child: Text('LoginScreen'),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {},
+          child: const Text('LoginScreen'),
+        ),
       ),
     );
   }
