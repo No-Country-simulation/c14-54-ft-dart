@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gestion_inventario/config/config.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(
+      DevicePreviewHelper.buildWithDevicePreview(
+        myApp: const MyApp(),
+      ),
+    );
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
