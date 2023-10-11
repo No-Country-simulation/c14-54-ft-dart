@@ -4,6 +4,7 @@ import 'package:gestion_inventario/config/config.dart';
 void main() => runApp(
       DevicePreviewHelper.buildWithDevicePreview(
         myApp: const MyApp(),
+        enabled: false,
       ),
     );
 
