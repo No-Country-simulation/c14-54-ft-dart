@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gestion_inventario/features/auth/presentation/widgets/widgets.dart';
 import 'package:gestion_inventario/features/shared/widgets/shared.dart';
 import 'package:go_router/go_router.dart';
 
@@ -10,39 +11,55 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    final scaffoldBackgroundColor = Theme.of(context).scaffoldBackgroundColor;
-
+    final colors = Theme.of(context).colorScheme;
+    final Size size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
           body: SingleChildScrollView(
         physics: const ClampingScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: Stack(
+          alignment: Alignment.topCenter,
           children: [
-            const SizedBox(height: 80),
-            // Icon Banner
-            const Icon(
-              Icons.production_quantity_limits_rounded,
-              color: Colors.white,
-              size: 100,
+            const CustomBackground(color: Colors.blue),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 80),
+              child: _LoginIcon(),
             ),
-            const SizedBox(height: 80),
-
-            Container(
-              height: size.height - 260, // 80 los dos sizebox y 100 el ícono
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: scaffoldBackgroundColor,
-                borderRadius:
-                    const BorderRadius.only(topLeft: Radius.circular(100)),
+            Padding(
+              padding: EdgeInsets.only(
+                top: size.height / 2 - 50,
               ),
-              child: const _LoginForm(),
-            )
+              child: FormContainerBackground(
+                color: colors.background,
+                child: const _LoginForm(),
+              ),
+            ),
           ],
         ),
       )),
+    );
+  }
+}
+
+class _LoginIcon extends StatelessWidget {
+  const _LoginIcon();
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    return Container(
+      height: 150,
+      width: 150,
+      decoration: BoxDecoration(
+        color: colors.primary,
+        borderRadius: BorderRadius.circular(100),
+      ),
+      child: Icon(
+        Icons.person_4_rounded,
+        color: colors.surface,
+        size: 100,
+      ),
     );
   }
 }
@@ -60,61 +77,123 @@ class _LoginForm extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final textStyles = Theme.of(context).textTheme;
     final colors = Theme.of(context).colorScheme;
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 50),
-      child: Column(
-        children: [
-          const SizedBox(height: 50),
-          Text('Login', style: textStyles.titleLarge),
-          const SizedBox(height: 90),
-          const CustomTextFormField(
-            label: 'Correo',
-            hint: 'juan@gmail.com',
-            keyboardType: TextInputType.emailAddress,
-            onChanged: null,
-            errorMessage: null,
-          ),
-          const SizedBox(height: 30),
-          CustomTextFormField(
-            label: 'Contraseña',
-            subfixIcon: IconButton(
-              icon: const Icon(
-                Icons.remove_red_eye_outlined,
-              ),
-              onPressed: () {},
-            ),
-            onFieldSubmitted: null,
-            obscureText: true,
-            onChanged: null,
-            errorMessage: null,
-          ),
-          const SizedBox(height: 30),
-          SizedBox(
-            width: double.infinity,
-            height: 60,
-            child: CustomFilledButton(
-              text: 'Ingresar',
-              buttonColor: colors.primary,
-              onPressed: () {},
-            ),
-          ),
-          const Spacer(flex: 2),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+    return Column(
+      children: [
+        const Padding(
+          padding: EdgeInsets.symmetric(vertical: 30),
+          child: _TitleForm(),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
             children: [
-              const Text('¿No tienes cuenta?'),
-              TextButton(
-                onPressed: () => context.push('/register'),
-                child: const Text('Crea una aquí'),
-              )
+              const CustomTextFormField(
+                label: 'Correo',
+                hint: 'juan@gmail.com',
+                keyboardType: TextInputType.emailAddress,
+                onChanged: null,
+                errorMessage: null,
+              ),
+              const SizedBox(height: 30),
+              CustomTextFormField(
+                label: 'Contraseña',
+                subfixIcon: IconButton(
+                  icon: const Icon(
+                    size: 30,
+                    Icons.remove_red_eye_outlined,
+                  ),
+                  onPressed: () {},
+                ),
+                onFieldSubmitted: null,
+                obscureText: true,
+                onChanged: null,
+                errorMessage: null,
+              ),
             ],
           ),
-          const Spacer(flex: 1),
-        ],
-      ),
+        ),
+        const SizedBox(height: 50),
+        SizedBox(
+          width: 250,
+          height: 60,
+          child: CustomFilledButton(
+            text: 'Ingresar',
+            buttonColor: colors.primary,
+            onPressed: () {},
+          ),
+        ),
+        const SizedBox(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text('¿No tienes cuenta?'),
+            TextButton(
+              onPressed: () => context.push('/register'),
+              child: const Text('Crea una aquí'),
+            )
+          ],
+        ),
+        const Spacer(flex: 1),
+      ],
     );
+  }
+}
+
+class _TitleForm extends StatelessWidget {
+  const _TitleForm();
+
+  @override
+  Widget build(BuildContext context) {
+    final textStyles = Theme.of(context).textTheme;
+    final colors = Theme.of(context).colorScheme;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const _BackgroundLine(),
+        const SizedBox(
+          width: 10,
+        ),
+        Text(
+          'LOGIN',
+          style: textStyles.titleLarge?.copyWith(
+            fontWeight: FontWeight.bold,
+            color: colors.primary,
+          ),
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        const _BackgroundLine(),
+      ],
+    );
+  }
+}
+
+class _BackgroundLine extends StatelessWidget {
+  const _BackgroundLine();
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomPaint(
+      painter: LinePainter(),
+      size: const Size(120, 3),
+    );
+  }
+}
+
+class LinePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()..color = Colors.black87;
+    final startPoint = Offset(0, size.height / 2);
+    final endPoint = Offset(size.width, size.height / 2);
+    canvas.drawLine(startPoint, endPoint, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
   }
 }
