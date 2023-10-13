@@ -5,6 +5,7 @@
  ## Integrantes
 ```
     Juan Andrés Peñaloza Torres
+    Breyner Ocampo Cárdenas
 
 ```
 
