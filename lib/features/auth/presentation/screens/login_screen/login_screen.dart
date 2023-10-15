@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_inventario/features/auth/presentation/widgets/widgets.dart';
+// import 'package:gestion_inventario/features/data/api/entities/user_emp.dart';
+import 'package:gestion_inventario/features/data/api/repository/firebase_api.dart';
 import 'package:gestion_inventario/features/shared/widgets/shared.dart';
 import 'package:go_router/go_router.dart';
+import 'package:logging/logging.dart';
 
 class LoginScreen extends StatelessWidget {
   static const route = 'login_screen';
@@ -66,6 +69,7 @@ class _LoginIcon extends StatelessWidget {
 
 class _LoginForm extends ConsumerWidget {
   const _LoginForm();
+
   void showSnackbar(BuildContext context, String errorMessage) {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
@@ -77,8 +81,61 @@ class _LoginForm extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final colors = Theme.of(context).colorScheme;
+    final email = TextEditingController();
+    final password = TextEditingController();
+    // UserEnt Userload = UserEnt.Empty();
+    final FirebaseApi firebaseApi = FirebaseApi();
+    void validate() async {
+      try {
+        var result = await firebaseApi.logInUser(email.text, password.text);
+        Logger(result.toString());
+        // () => context.push('/api');
+        void got() => context.push('/api');
+        got();
+        //  Navigator.pushReplacement(
+        //       context, MaterialPageRoute(builder: (context) => const ScreenProduct()));
+      } catch (e) {
+        Logger("FirebaseException  $e");
+      }
+    }
 
+    final colors = Theme.of(context).colorScheme;
+    final emailL = TextFormField(
+      controller: email,
+      decoration: const InputDecoration(
+        icon: Icon(Icons.email),
+        border: OutlineInputBorder(
+            borderRadius:  BorderRadius.all( Radius.circular(80.0))),
+        labelText: 'Email',
+      ),
+      // obscureText: true,
+      keyboardType: TextInputType.emailAddress,
+    );
+
+    final passwordL = TextField(
+        controller: password,
+        keyboardType: TextInputType.visiblePassword,
+        obscureText: true,
+        decoration: const InputDecoration(
+          icon: Icon(Icons.lock_open_outlined),
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(80.0))),
+          hintText: 'Password',
+        ));
+
+    final loginBtn = ElevatedButton(
+        style: ButtonStyle(
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(18.0),
+          // side: BorderSide(color: Colors.red)
+        ))),
+        onPressed: () {
+          // _validateUser();
+          validate();
+          // print("login");
+        },
+        child: const Text("Iniciar sesion"));
     return Column(
       children: [
         const Padding(
@@ -97,6 +154,9 @@ class _LoginForm extends ConsumerWidget {
                 errorMessage: null,
               ),
               const SizedBox(height: 30),
+              emailL,
+              passwordL,
+              loginBtn,
               CustomTextFormField(
                 label: 'Contraseña',
                 subfixIcon: IconButton(
