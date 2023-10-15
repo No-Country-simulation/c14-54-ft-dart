@@ -23,8 +23,8 @@ class SecondScreen extends StatelessWidget {
               ),
               OnboardingSubTitle(
                   text: 'Accede a informes detallados de inventario'),
-              OnboardingSubTitle(text: 'Visualiza datos clave de tu negocio'),
               OnboardingSubTitle(text: 'Toma decisiones basadas en análisis'),
+              OnboardingSubTitle(text: 'Visualiza datos clave de tu negocio'),
             ],
           ),
           SizedBox(height: 100),
