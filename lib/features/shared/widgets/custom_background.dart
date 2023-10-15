@@ -39,7 +39,7 @@ class CurvePainter extends CustomPainter {
 
     if (up) {
       final path = Path()
-        ..moveTo(0, size.height / 3)
+        ..moveTo(0, size.height / 2)
         ..cubicTo(
           size.width / 2,
           -size.height / 8,
