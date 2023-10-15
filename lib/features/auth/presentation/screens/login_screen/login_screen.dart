@@ -12,31 +12,35 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
-    final Size size = MediaQuery.of(context).size;
+
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-          body: SingleChildScrollView(
-        physics: const ClampingScrollPhysics(),
-        child: Stack(
-          alignment: Alignment.topCenter,
-          children: [
-            const CustomBackground(color: Colors.blue),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 80),
-              child: _LoginIcon(),
+          body: Stack(
+        alignment: Alignment.topCenter,
+        children: [
+          SingleChildScrollView(
+              child: CustomBackground(
+            color: colors.primary,
+          )),
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(
+                    top: 150,
+                    bottom: 80,
+                  ),
+                  child: _LoginIcon(),
+                ),
+                FormContainerBackground(
+                  color: colors.background,
+                  child: const _LoginForm(),
+                ),
+              ],
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                top: size.height / 2 - 50,
-              ),
-              child: FormContainerBackground(
-                color: colors.background,
-                child: const _LoginForm(),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       )),
     );
   }
@@ -49,15 +53,15 @@ class _LoginIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     return Container(
-      height: 150,
-      width: 150,
+      height: 120,
+      width: 120,
       decoration: BoxDecoration(
-        color: colors.primary,
+        color: colors.background,
         borderRadius: BorderRadius.circular(100),
       ),
       child: Icon(
         Icons.person_4_rounded,
-        color: colors.surface,
+        color: colors.primary,
         size: 100,
       ),
     );
@@ -111,10 +115,16 @@ class _LoginForm extends ConsumerWidget {
                 onChanged: null,
                 errorMessage: null,
               ),
+              Align(
+                alignment: Alignment.topRight,
+                child: TextButton(
+                  onPressed: () {},
+                  child: const Text('¿Olvidaste tu contraseña?'),
+                ),
+              ),
             ],
           ),
         ),
-        const SizedBox(height: 50),
         SizedBox(
           width: 250,
           height: 60,
@@ -135,7 +145,6 @@ class _LoginForm extends ConsumerWidget {
             )
           ],
         ),
-        const Spacer(flex: 1),
       ],
     );
   }
