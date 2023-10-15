@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "530000143198",
+    "project_id": "gestion-inv",
+    "storage_bucket": "gestion-inv.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:530000143198:android:8be14b00271a7e75f025cf",
+        "android_client_info": {
+          "package_name": "com.example.gestion_inventario"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMd91ET8fZdHrJCurQsBKrXi68Wyp7w_M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
