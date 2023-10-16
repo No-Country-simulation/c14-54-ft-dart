@@ -13,7 +13,7 @@ class FormContainerBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(bottom: 30),
+      padding: const EdgeInsets.symmetric(vertical: 30),
       width: double.infinity,
       decoration: BoxDecoration(
         color: color,
