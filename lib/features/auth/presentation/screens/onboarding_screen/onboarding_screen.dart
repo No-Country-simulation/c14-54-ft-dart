@@ -17,7 +17,6 @@ class OnBoardingScreen extends ConsumerWidget {
     final pageController = PageController();
     final colors = Theme.of(context).colorScheme;
     final pageInt = ref.watch(paginationProvider);
-    final Size size = MediaQuery.of(context).size;
 
     return Scaffold(
       body: Column(
