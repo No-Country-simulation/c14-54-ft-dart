@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gestion_inventario/features/auth/presentation/providers/providers.dart';
+import 'package:gestion_inventario/features/auth/presentation/screens/register_screen/register_screen.dart';
 import 'package:gestion_inventario/features/auth/presentation/screens/welcome_screen/welcome_screen.dart';
 import 'package:gestion_inventario/features/auth/presentation/widgets/widgets.dart';
 import 'package:gestion_inventario/features/shared/widgets/shared.dart';
@@ -83,11 +85,20 @@ class _LoginForm extends ConsumerWidget {
               CustomTextFormField(
                 label: 'Contraseña',
                 subfixIcon: IconButton(
-                  icon: const Icon(size: 25, FontAwesomeIcons.eye),
-                  onPressed: () {},
+                  icon: ref.watch(obscureTextProvider)
+                      ? const Icon(size: 25, FontAwesomeIcons.eye)
+                      : const Icon(
+                          FontAwesomeIcons.eyeSlash,
+                          size: 25,
+                        ),
+                  onPressed: () {
+                    ref
+                        .read(obscureTextProvider.notifier)
+                        .update((state) => !state);
+                  },
                 ),
                 onFieldSubmitted: null,
-                obscureText: true,
+                obscureText: ref.watch(obscureTextProvider),
                 onChanged: null,
                 errorMessage: null,
               ),
@@ -118,7 +129,10 @@ class _LoginForm extends ConsumerWidget {
           children: [
             const Text('¿No tienes cuenta?'),
             TextButton(
-              onPressed: () => context.push('/register'),
+              onPressed: () {
+                context.pushNamed(RegisterScreen.route);
+                ref.invalidate(obscureTextProvider);
+              },
               child: const Text('Crea una aquí'),
             )
           ],
