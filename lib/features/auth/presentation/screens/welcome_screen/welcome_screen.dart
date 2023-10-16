@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gestion_inventario/features/shared/widgets/shared.dart';
+import 'welcome.dart';
 
 class WelcomeScreen extends StatelessWidget {
   static const route = 'welcome_screen';
@@ -16,7 +17,7 @@ class WelcomeScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          CustomBackground(
+          WelcomeBackground(
             color: colors.primary,
           ),
           SafeArea(

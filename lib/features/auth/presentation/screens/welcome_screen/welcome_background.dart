@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class CustomBackground extends StatelessWidget {
+class WelcomeBackground extends StatelessWidget {
   final Color color;
 
-  const CustomBackground({super.key, required this.color});
+  const WelcomeBackground({super.key, required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -43,11 +43,11 @@ class CurvePainter extends CustomPainter {
         ..moveTo(0, size.height / 2)
         ..cubicTo(
           size.width / 2,
-          -size.height / 8,
-          size.width / 2,
-          size.height / 3,
+          -size.height / 20,
+          3 * size.width / 6,
+          3 * size.height / 4,
           size.width,
-          size.height / 8,
+          size.height / 3,
         )
         ..lineTo(size.width, 0)
         ..lineTo(0, 0)
@@ -56,14 +56,14 @@ class CurvePainter extends CustomPainter {
       return canvas.drawPath(path, paint);
     }
     final path = Path()
-      ..moveTo(0, size.height / 3)
+      ..moveTo(0, size.height / 2)
       ..cubicTo(
         size.width / 2,
-        -size.height / 8,
-        size.width / 2,
-        size.height / 3,
+        -size.height / 20,
+        3 * size.width / 6,
+        3 * size.height / 4,
         size.width,
-        size.height / 8,
+        size.height / 3,
       )
       ..lineTo(size.width, size.height)
       ..lineTo(0, size.height)
