@@ -20,7 +20,7 @@ class OnBoardingScreen extends ConsumerWidget {
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      body: Stack(
+      body: Column(
         children: [
           Expanded(
             child: PageView(
@@ -36,11 +36,7 @@ class OnBoardingScreen extends ConsumerWidget {
               ],
             ),
           ),
-          Positioned(
-            bottom: size.height / 6,
-            right: size.width / 2 - 20,
-            child: _Pagination(pageInt: pageInt),
-          ),
+          _Pagination(pageInt: pageInt),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             child: Align(
@@ -77,6 +73,7 @@ class _Pagination extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         _Pagina(
           active: pageInt == 0 ? true : false,
