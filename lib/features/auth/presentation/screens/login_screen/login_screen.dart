@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gestion_inventario/features/auth/presentation/providers/providers.dart';
 import 'package:gestion_inventario/features/auth/presentation/screens/register_screen/register_screen.dart';
-import 'package:gestion_inventario/features/auth/presentation/screens/welcome_screen/welcome_screen.dart';
 import 'package:gestion_inventario/features/auth/presentation/widgets/widgets.dart';
 import 'package:gestion_inventario/features/shared/widgets/shared.dart';
 import 'package:go_router/go_router.dart';
@@ -63,6 +62,12 @@ class _LoginForm extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final loginForm = ref.watch(loginFormProvider);
+    ref.listen(authProvider, (previous, next) {
+      if (next.errorMessage.isEmpty) return;
+      showSnackbar(context, next.errorMessage);
+    });
+
     final colors = Theme.of(context).colorScheme;
 
     return Column(
@@ -75,12 +80,15 @@ class _LoginForm extends ConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              const CustomTextFormField(
+              CustomTextFormField(
                 label: 'Correo',
                 hint: 'juandpt@mail.com',
                 keyboardType: TextInputType.emailAddress,
-                onChanged: null,
-                errorMessage: null,
+                onChanged: (value) =>
+                    ref.read(loginFormProvider.notifier).onEmailChanged(value),
+                errorMessage: loginForm.isFormPosted
+                    ? loginForm.email.errorMessage
+                    : null,
               ),
               CustomTextFormField(
                 label: 'Contraseña',
@@ -97,10 +105,15 @@ class _LoginForm extends ConsumerWidget {
                         .update((state) => !state);
                   },
                 ),
-                onFieldSubmitted: null,
+                onFieldSubmitted: (_) =>
+                    ref.read(loginFormProvider.notifier).onFormSubmit(),
                 obscureText: ref.watch(obscureTextProvider),
-                onChanged: null,
-                errorMessage: null,
+                onChanged: (value) => ref
+                    .read(loginFormProvider.notifier)
+                    .onPasswordChanged(value),
+                errorMessage: loginForm.isFormPosted
+                    ? loginForm.password.errorMessage
+                    : null,
               ),
               Align(
                 alignment: Alignment.topRight,
@@ -116,12 +129,11 @@ class _LoginForm extends ConsumerWidget {
           width: 250,
           height: 60,
           child: CustomFilledButton(
-            text: 'INGRESAR',
-            buttonColor: colors.primary,
-            onPressed: () {
-              context.pushNamed(WelcomeScreen.route);
-            },
-          ),
+              text: 'INGRESAR',
+              buttonColor: colors.primary,
+              onPressed: loginForm.isPosting
+                  ? null
+                  : ref.read(loginFormProvider.notifier).onFormSubmit),
         ),
         const SizedBox(height: 10),
         Row(
