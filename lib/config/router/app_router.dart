@@ -1,3 +1,4 @@
+import 'package:gestion_inventario/features/auth/presentation/screens/onboarding_screen/onboarding.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gestion_inventario/features/auth/presentation/screens/screens.dart';
 
@@ -34,5 +35,10 @@ final appRouter = GoRouter(
             builder: (context, state) => const ThirdScreen(),
           ),
         ]),
+    GoRoute(
+      name: WelcomeScreen.route,
+      path: '/welcome_screen',
+      builder: (context, state) => const WelcomeScreen(),
+    ),
   ],
 );

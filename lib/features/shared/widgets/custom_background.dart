@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CustomBackground extends StatelessWidget {
   final Color color;
 
-  const CustomBackground({Key? key, required this.color}) : super(key: key);
+  const CustomBackground({super.key, required this.color});
 
   @override
   Widget build(BuildContext context) {

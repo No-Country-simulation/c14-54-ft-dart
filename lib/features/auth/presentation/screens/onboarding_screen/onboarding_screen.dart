@@ -5,6 +5,7 @@ import 'package:gestion_inventario/features/auth/presentation/providers/provider
 import 'package:gestion_inventario/features/auth/presentation/screens/screens.dart';
 import 'package:gestion_inventario/features/shared/widgets/shared.dart';
 import 'package:go_router/go_router.dart';
+import 'onboarding.dart';
 
 class OnBoardingScreen extends ConsumerWidget {
   static const route = 'onboarding_screen';

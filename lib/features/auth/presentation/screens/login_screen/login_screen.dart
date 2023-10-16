@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gestion_inventario/features/auth/presentation/screens/welcome_screen/welcome_screen.dart';
 import 'package:gestion_inventario/features/auth/presentation/widgets/widgets.dart';
 import 'package:gestion_inventario/features/shared/widgets/shared.dart';
 import 'package:go_router/go_router.dart';
@@ -106,7 +107,9 @@ class _LoginForm extends ConsumerWidget {
           child: CustomFilledButton(
             text: 'INGRESAR',
             buttonColor: colors.primary,
-            onPressed: () {},
+            onPressed: () {
+              context.pushNamed(WelcomeScreen.route);
+            },
           ),
         ),
         const SizedBox(height: 10),
