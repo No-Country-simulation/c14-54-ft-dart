@@ -20,7 +20,7 @@ class ThirdScreen extends StatelessWidget {
             children: [
               OnboardingTitle(title: 'PERSONALIZACIÓN'),
               OnboardingSubTitle(
-                  text: 'Personaliza las categorías de pro ductos'),
+                  text: 'Personaliza las categorías de productos'),
               OnboardingSubTitle(text: 'Configura tu perfil de negocio'),
               OnboardingSubTitle(text: 'Configura alertas'),
             ],

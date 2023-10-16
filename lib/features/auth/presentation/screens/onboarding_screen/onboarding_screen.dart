@@ -16,6 +16,7 @@ class OnBoardingScreen extends ConsumerWidget {
     final pageController = PageController();
     final colors = Theme.of(context).colorScheme;
     final pageInt = ref.watch(paginationProvider);
+    final Size size = MediaQuery.of(context).size;
 
     return Scaffold(
       body: Stack(
@@ -34,17 +35,10 @@ class OnBoardingScreen extends ConsumerWidget {
               ],
             ),
           ),
-          _Pagina(
-            active: pageInt == 2 ? true : false,
-            displacement: -15,
-          ),
-          _Pagina(
-            active: pageInt == 1 ? true : false,
-            displacement: 0,
-          ),
-          _Pagina(
-            active: pageInt == 0 ? true : false,
-            displacement: 15,
+          Positioned(
+            bottom: size.height / 6,
+            right: size.width / 2 - 20,
+            child: _Pagination(pageInt: pageInt),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -68,6 +62,34 @@ class OnBoardingScreen extends ConsumerWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+class _Pagination extends StatelessWidget {
+  const _Pagination({
+    required this.pageInt,
+  });
+
+  final int pageInt;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        _Pagina(
+          active: pageInt == 0 ? true : false,
+          displacement: 5,
+        ),
+        _Pagina(
+          active: pageInt == 1 ? true : false,
+          displacement: 5,
+        ),
+        _Pagina(
+          active: pageInt == 2 ? true : false,
+          displacement: 0,
+        ),
+      ],
     );
   }
 }
@@ -112,7 +134,7 @@ class _OnboardingButton extends StatelessWidget {
 
 class _Pagina extends StatelessWidget {
   final bool active;
-  final int displacement;
+  final double displacement;
 
   const _Pagina({
     required this.active,
@@ -121,19 +143,15 @@ class _Pagina extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
     final colors = Theme.of(context).colorScheme;
 
-    return Positioned(
-      bottom: size.height / 6,
-      right: size.width / 2 + displacement,
-      child: Container(
-        height: 10,
-        width: 10,
-        decoration: BoxDecoration(
-          color: active ? colors.primary : colors.secondary,
-          borderRadius: BorderRadius.circular(200),
-        ),
+    return Container(
+      margin: EdgeInsets.only(right: displacement),
+      height: 10,
+      width: 10,
+      decoration: BoxDecoration(
+        color: active ? colors.primary : colors.secondary,
+        borderRadius: BorderRadius.circular(200),
       ),
     );
   }
