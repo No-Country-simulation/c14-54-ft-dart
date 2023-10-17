@@ -31,7 +31,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     // state = state.copyWith(authStatus: AuthStatus.authenticated, user: user);
   }
 
-  void registerUser(String email, String password) async {}
+  Future<void> registerUser(String email, String password) async {}
   void checkAuthStatus() async {
     // if (token == null) return logout();
 

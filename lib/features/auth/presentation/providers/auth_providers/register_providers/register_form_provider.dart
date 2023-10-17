@@ -5,17 +5,18 @@ import 'package:gestion_inventario/features/shared/infrastructure/inputs/inputs.
 
 //Provider
 
-final loginFormProvider =
-    StateNotifierProvider.autoDispose<LoginFormNotifier, LoginFormState>((ref) {
-  final loginUserCallBack = ref.watch(authProvider.notifier).loginUser;
-  return LoginFormNotifier(loginUserCallBack);
+final registerFormProvider =
+    StateNotifierProvider.autoDispose<RegisterFormNotifier, RegisterFormState>(
+        (ref) {
+  final registerUserCallBack = ref.watch(authProvider.notifier).registerUser;
+  return RegisterFormNotifier(registerUserCallBack);
 });
 
 //Notifier
 
-class LoginFormNotifier extends StateNotifier<LoginFormState> {
-  final Future<void> Function(String, String) loginUserCallBack;
-  LoginFormNotifier(this.loginUserCallBack) : super(LoginFormState());
+class RegisterFormNotifier extends StateNotifier<RegisterFormState> {
+  final Future<void> Function(String, String) registerUserCallBack;
+  RegisterFormNotifier(this.registerUserCallBack) : super(RegisterFormState());
 
   onEmailChanged(String value) {
     final newEmail = Email.dirty(value: value);
@@ -39,7 +40,7 @@ class LoginFormNotifier extends StateNotifier<LoginFormState> {
     state = state.copyWith(
       isPosting: true,
     );
-    await loginUserCallBack(state.email.value, state.password.value);
+    await registerUserCallBack(state.email.value, state.password.value);
     state = state.copyWith(
       isPosting: false,
     );
@@ -59,14 +60,18 @@ class LoginFormNotifier extends StateNotifier<LoginFormState> {
 
 //State
 
-class LoginFormState {
+class RegisterFormState {
   final bool isPosting;
   final bool isFormPosted;
   final bool isValid;
   final Email email;
   final Password password;
+  final Phone phone;
+  final Username userName;
 
-  LoginFormState({
+  RegisterFormState({
+    this.phone = const Phone.pure(),
+    this.userName = const Username.pure(),
     this.isPosting = false,
     this.isFormPosted = false,
     this.isValid = false,
@@ -74,14 +79,14 @@ class LoginFormState {
     this.password = const Password.pure(),
   });
 
-  LoginFormState copyWith({
+  RegisterFormState copyWith({
     final bool? isPosting,
     final bool? isFormPosted,
     final bool? isValid,
     final Email? email,
     final Password? password,
   }) =>
-      LoginFormState(
+      RegisterFormState(
         isPosting: isPosting ?? this.isPosting,
         isFormPosted: isFormPosted ?? this.isFormPosted,
         isValid: isValid ?? this.isValid,

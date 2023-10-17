@@ -129,11 +129,12 @@ class _LoginForm extends ConsumerWidget {
           width: 250,
           height: 60,
           child: CustomFilledButton(
-              text: 'INGRESAR',
-              buttonColor: colors.primary,
-              onPressed: loginForm.isPosting
-                  ? null
-                  : ref.read(loginFormProvider.notifier).onFormSubmit),
+            text: 'INGRESAR',
+            buttonColor: colors.primary,
+            onPressed: loginForm.isPosting
+                ? null
+                : ref.read(loginFormProvider.notifier).onFormSubmit,
+          ),
         ),
         const SizedBox(height: 10),
         Row(

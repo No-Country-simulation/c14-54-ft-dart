@@ -10,7 +10,7 @@ class Email extends FormzInput<String, EmailError> {
   const Email.dirty({String value = ''}) : super.dirty(value);
 
   String? get errorMessage {
-    if (isValid || isPure) return null;
+    if (isValid) return null;
 
     if (displayError == EmailError.empty) return 'El campo es requerido';
     if (displayError == EmailError.format) {
