@@ -14,7 +14,7 @@ class Password extends FormzInput<String, PasswordError> {
 
     if (displayError == PasswordError.empty) return 'El campo es requerido';
     if (displayError == PasswordError.format) {
-      return 'La contraseña debe contener al menos 8 caracteres.';
+      return 'Debe contener al menos 8 caracteres.';
     }
 
     return null;
