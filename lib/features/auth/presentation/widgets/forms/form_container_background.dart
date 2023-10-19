@@ -12,9 +12,8 @@ class FormContainerBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
     return Container(
-      height: size.height - 250,
+      padding: const EdgeInsets.symmetric(vertical: 30),
       width: double.infinity,
       decoration: BoxDecoration(
         color: color,

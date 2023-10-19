@@ -5,7 +5,10 @@ class AppTheme {
   final bool isDarkMode;
   final Color colorSeed;
 
-  AppTheme({this.isDarkMode = false, this.colorSeed = Colors.blueAccent});
+  AppTheme({
+    this.isDarkMode = false,
+    this.colorSeed = Colors.blueAccent,
+  });
 
   ThemeData getAppTheme() => ThemeData(
         useMaterial3: true,

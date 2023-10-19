@@ -34,7 +34,7 @@ class CustomTextFormField extends StatelessWidget {
     );
 
     return Container(
-      // padding: const EdgeInsets.only(bottom: 0, top: 15),
+      margin: const EdgeInsets.only(bottom: 20),
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),
@@ -55,7 +55,9 @@ class CustomTextFormField extends StatelessWidget {
           keyboardType: keyboardType,
           decoration: InputDecoration(
             contentPadding:
-                const EdgeInsets.only(top: 25, left: 15, bottom: 25),
+                const EdgeInsets.only(top: 25, left: 15, bottom: 10),
+
+            errorMaxLines: 2,
             suffixIcon: subfixIcon,
             floatingLabelStyle: const TextStyle(
                 color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
@@ -74,6 +76,7 @@ class CustomTextFormField extends StatelessWidget {
                 : null,
 
             hintText: hint,
+
             errorText: errorMessage,
             focusColor: colors.primary,
             // icon: Icon( Icons.supervised_user_circle_outlined, color: colors.primary, )
