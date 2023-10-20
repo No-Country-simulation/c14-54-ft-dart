@@ -5,8 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:logging/logging.dart';
 import 'firebase_options.dart';
 
-<<<<<<< HEAD
-final log = Logger('ExampleLogger');
+// final log = Logger('ExampleLogger');
 void main() async {
 // void main() {
   Logger.root.level = Level.ALL; // defaults to Level.INFO
@@ -17,21 +16,19 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(
+runApp(
     DevicePreviewHelper.buildWithDevicePreview(
-      myApp: const MyApp(),
+      myApp: const ProviderScope(child: MyApp()),
       enabled: false,
     ),
   );
 }
-=======
-void main() => runApp(
-      DevicePreviewHelper.buildWithDevicePreview(
-        myApp: const ProviderScope(child: MyApp()),
-        enabled: false,
-      ),
-    );
->>>>>>> 109f5d6660fd29f34f71a18bb4bad283e58abdcc
+// void main() => runApp(
+//       DevicePreviewHelper.buildWithDevicePreview(
+//         myApp: const ProviderScope(child: MyApp()),
+//         enabled: false,
+//       ),
+//     );
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -45,3 +42,8 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+
+
+

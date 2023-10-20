@@ -34,7 +34,9 @@ class FirebaseApi {
       final credential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
       // print(credential.additionalUserInfo);
-      // print(credential.user?.email);
+      print(credential.user);
+
+
       // print(credential);
       // print("FIREBASE");
 
@@ -55,7 +57,7 @@ class FirebaseApi {
       // final document =
           // await FirebaseFirestore.instance.collection("users").add(user.toJson());
           await FirebaseFirestore.instance
-              .collection("users")
+              .collection("usuarios")
               .doc(user.uid)
               .set(user.toJson());
       // Logger("${document}");
@@ -73,13 +75,13 @@ class FirebaseApi {
       final document =
           // await FirebaseFirestore.instance.collection("users").add(user.toJson());
           await FirebaseFirestore.instance
-              .collection("users")
+              .collection("usuarios")
               .doc(user.uid)
               .get();
       // UserApp.User retU = UserApp.User.Empty();
-      Logger("Query");
-      Logger(user.uid);
-      Logger("${document.data()}");
+      print("Query");
+      print(user.uid);
+      print("${document.data()}");
       Logger("Exit");
       // Persona per = Persona.fromJson(document.get());
       // UserEnt d = UserEnt.Empty();
@@ -93,7 +95,7 @@ class FirebaseApi {
       Map<String, dynamic> dat = {'Error': e.code};
       // return user.toJson();
       Logger("$dat");
-      return UserEnt.Empty();
+      return UserEnt("","","","","");
     }
   }
 

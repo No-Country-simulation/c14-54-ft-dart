@@ -40,16 +40,12 @@ dependencies:
   formz: ^0.6.1
   go_router: ^11.1.3
   google_fonts: ^6.1.0
-<<<<<<< HEAD
   csv: ^5.0.1
   http: ^1.1.0
   firebase_auth: ^4.10.1
   cloud_firestore: ^4.9.3
   firebase_core: ^2.17.0
   logging: ^1.2.0
-=======
-
->>>>>>> 109f5d6660fd29f34f71a18bb4bad283e58abdcc
 dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:
