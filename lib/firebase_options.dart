@@ -50,17 +50,17 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDMd91ET8fZdHrJCurQsBKrXi68Wyp7w_M',
-    appId: '1:530000143198:android:8be14b00271a7e75f025cf',
-    messagingSenderId: '530000143198',
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
     projectId: 'gestion-inv',
     storageBucket: 'gestion-inv.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyD9RQBN8EoLciMatvWG8Gs6fClYD0QpV20',
-    appId: '1:530000143198:ios:124e9de851fb7708f025cf',
-    messagingSenderId: '530000143198',
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
     projectId: 'gestion-inv',
     storageBucket: 'gestion-inv.appspot.com',
     iosBundleId: 'com.example.gestionInventario',
