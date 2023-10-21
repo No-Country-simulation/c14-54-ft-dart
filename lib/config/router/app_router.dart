@@ -5,7 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:gestion_inventario/features/auth/presentation/screens/screens.dart';
 
 final appRouter = GoRouter(
-  initialLocation: '/P',
+  // initialLocation: '/P',
+  initialLocation: '/onboarding',
   routes: [
     GoRoute(
       name: LoginScreen.route,

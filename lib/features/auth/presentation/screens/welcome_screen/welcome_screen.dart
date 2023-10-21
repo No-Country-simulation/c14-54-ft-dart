@@ -47,7 +47,7 @@ class WelcomeScreen extends ConsumerWidget {
                       height: 100,
                     ),
                     CustomFilledButton(
-                      text: 'Hola mundo',
+                      text: user.email,
                       buttonColor: colors.background,
                       textStyle: TextStyle(
                         fontWeight: FontWeight.bold,

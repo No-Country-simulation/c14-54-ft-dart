@@ -32,7 +32,7 @@ class _ProfilePagePageState extends State<ProfilePage> {
     userR.uid = currentUser2?.uid;
     // userR.uid = "zmKeSl4SB1W6lx6Uxinu19gk5o03";
     print("PRO: ${userR.uid}");
-    userR = (await _firebaseApi.getUser(userR))!;
+    // userR = (await _firebaseApi.getUser(userR))!;
 
     setState(() {
       userF = userR;

@@ -12,19 +12,22 @@ class AuthDatasourceFirebase extends AuthDataSource {
   );
   @override
   Future<User> login({required email, required password}) async {
-    print("H");
+    // print("H");
     try {
       String uid = await firebaseApi.logInUser(email, password) ?? "";
 
       final data = (await firebaseApi.getUser(uid));
-      // print(result);
+      // print("DATA");
+      // print(uid);
+      // print(data);
       User user = UserMapper.userJsonToEntity(data);
-
+      // print(user.fullname);
+      // print(user);
       return user;
     } catch (e) {
-      print(e);
-      print("Error");
-      return User(id: "", email: email, fullname: "****", phone: '');
+      // print("Error");
+      // print(e);
+      throw UnimplementedError();
     }
   }
 
