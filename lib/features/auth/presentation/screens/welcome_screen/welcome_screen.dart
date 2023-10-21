@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:gestion_inventario/features/auth/presentation/providers/auth_providers/auth_provider.dart';
 import 'package:gestion_inventario/features/shared/widgets/shared.dart';
 import 'welcome.dart';
 
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends ConsumerWidget {
   static const route = 'welcome_screen';
   const WelcomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(authProvider).user;
+    
     final colors = Theme.of(context).colorScheme;
     final textStyle = Theme.of(context)
         .textTheme
@@ -25,7 +29,7 @@ class WelcomeScreen extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    const _WelcomeTitle(text: 'Hola Nombre'),
+                     _WelcomeTitle(text: 'Hola ${user!.fullname}'),
                     const SizedBox(
                       height: 10,
                     ),
