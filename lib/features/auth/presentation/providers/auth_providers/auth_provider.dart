@@ -24,16 +24,13 @@ class AuthNotifier extends StateNotifier<AuthState> {
     await Future.delayed(const Duration(milliseconds: 500));
     try {
       final user = await authRepository.login(email: email, password: password);
-      print("Login");
-      print(user);
+      // print("Login");
+      // print(user);
       _setLoggedUser(user);
-      
-
-              
+      state = state.copyWith(authStatus: AuthStatus.authenticated, user: user);
     } catch (e) {
       logout('Error no controlado');
     }
-    // state = state.copyWith(authStatus: AuthStatus.authenticated, user: user);
   }
 
   Future<void> registerUser(String email, String password) async {}

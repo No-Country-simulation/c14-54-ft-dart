@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gestion_inventario/features/auth/presentation/providers/providers.dart';
+import 'package:gestion_inventario/features/auth/presentation/screens/screens.dart';
 
 import 'package:gestion_inventario/features/auth/presentation/widgets/widgets.dart';
 import 'package:gestion_inventario/features/shared/widgets/shared.dart';
 import 'package:go_router/go_router.dart';
 
-import '../screens.dart';
+// import '../screens.dart';
 
 class LoginScreen extends StatelessWidget {
   static const route = 'login_screen';
@@ -135,7 +136,13 @@ class _LoginForm extends ConsumerWidget {
             buttonColor: colors.primary,
             onPressed: loginForm.isPosting
                 ? null
-                : ref.read(loginFormProvider.notifier).onFormSubmit,
+                : () {
+                    ref.read(loginFormProvider.notifier).onFormSubmit();
+                    if (ref.read(authProvider).authStatus ==
+                        AuthStatus.authenticated) {
+                      context.pushNamed(WelcomeScreen.route);
+                    }
+                  },
           ),
         ),
         const SizedBox(height: 10),

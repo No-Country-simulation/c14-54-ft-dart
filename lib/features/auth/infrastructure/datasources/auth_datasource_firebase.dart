@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:gestion_inventario/features/auth/domain/domain.dart';
+import 'package:gestion_inventario/features/auth/infrastructure/infrastructure.dart';
 import 'package:gestion_inventario/features/data/api/repository/firebase_api.dart';
 
 class AuthDatasourceFirebase extends AuthDataSource {
@@ -13,14 +14,17 @@ class AuthDatasourceFirebase extends AuthDataSource {
   Future<User> login({required email, required password}) async {
     print("H");
     try {
-      var result = await firebaseApi.logInUser(email, password);
-      print(result);
-      
-      return User(id: result.toString(), email: email, fullname: "****");
+      String uid = await firebaseApi.logInUser(email, password) ?? "";
+
+      final data = (await firebaseApi.getUser(uid));
+      // print(result);
+      User user = UserMapper.userJsonToEntity(data);
+
+      return user;
     } catch (e) {
       print(e);
       print("Error");
-      return User(id: "", email: email, fullname: "****");
+      return User(id: "", email: email, fullname: "****", phone: '');
     }
   }
 

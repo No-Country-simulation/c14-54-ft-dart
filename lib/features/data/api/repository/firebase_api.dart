@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:gestion_inventario/features/auth/domain/domain.dart';
 import 'package:gestion_inventario/features/data/api/entities/user_emp.dart';
 import 'package:gestion_inventario/features/data/model/product_inv.dart';
 import 'package:logging/logging.dart';
@@ -36,7 +37,6 @@ class FirebaseApi {
       // print(credential.additionalUserInfo);
       print(credential.user);
 
-
       // print(credential);
       // print("FIREBASE");
 
@@ -55,11 +55,11 @@ class FirebaseApi {
   Future<String?> createUser(UserEnt user) async {
     try {
       // final document =
-          // await FirebaseFirestore.instance.collection("users").add(user.toJson());
-          await FirebaseFirestore.instance
-              .collection("usuarios")
-              .doc(user.uid)
-              .set(user.toJson());
+      // await FirebaseFirestore.instance.collection("users").add(user.toJson());
+      await FirebaseFirestore.instance
+          .collection("usuarios")
+          .doc(user.uid)
+          .set(user.toJson());
       // Logger("${document}");
       return user.uid;
       // return document.
@@ -70,17 +70,17 @@ class FirebaseApi {
     }
   }
 
-  Future<UserEnt> getUser(UserEnt user) async {
+  Future<Map<String, dynamic>> getUser(String uid) async {
     try {
       final document =
           // await FirebaseFirestore.instance.collection("users").add(user.toJson());
           await FirebaseFirestore.instance
               .collection("usuarios")
-              .doc(user.uid)
+              .doc(uid)
               .get();
       // UserApp.User retU = UserApp.User.Empty();
       print("Query");
-      print(user.uid);
+      // print(user.uid);
       print("${document.data()}");
       Logger("Exit");
       // Persona per = Persona.fromJson(document.get());
@@ -89,13 +89,13 @@ class FirebaseApi {
 
       // jsonDecode(dat);
 
-      return UserEnt.fromJson(dat!);
+      return dat!;
     } on FirebaseException catch (e) {
       Logger("FirebaseException  ${e.code}");
       Map<String, dynamic> dat = {'Error': e.code};
       // return user.toJson();
       Logger("$dat");
-      return UserEnt("","","","","");
+      return dat;
     }
   }
 

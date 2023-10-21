@@ -5,5 +5,6 @@ class UserMapper {
         id: json['id'],
         email: json['email'],
         fullname: json['fullName'],
+        phone: json['phone'],
       );
 }
