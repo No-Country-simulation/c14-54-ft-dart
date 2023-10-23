@@ -106,8 +106,17 @@ class _LoginForm extends ConsumerWidget {
                         .update((state) => !state);
                   },
                 ),
-                onFieldSubmitted: (_) =>
-                    ref.read(loginFormProvider.notifier).onFormSubmit(),
+                onFieldSubmitted: (_) async {
+                  await ref
+                      .read(loginFormProvider.notifier)
+                      .onFormSubmit()
+                      .then((_) {
+                    if (ref.read(authProvider).authStatus ==
+                        AuthStatus.authenticated) {
+                      context.pushNamed(WelcomeScreen.route);
+                    }
+                  });
+                },
                 obscureText: ref.watch(obscureTextProvider),
                 onChanged: (value) => ref
                     .read(loginFormProvider.notifier)
@@ -134,12 +143,16 @@ class _LoginForm extends ConsumerWidget {
             buttonColor: colors.primary,
             onPressed: loginForm.isPosting
                 ? null
-                : () {
-                    ref.read(loginFormProvider.notifier).onFormSubmit();
-                    if (ref.read(authProvider).authStatus ==
-                        AuthStatus.authenticated) {
-                      context.pushNamed(WelcomeScreen.route);
-                    }
+                : () async {
+                    await ref
+                        .read(loginFormProvider.notifier)
+                        .onFormSubmit()
+                        .then((_) {
+                      if (ref.read(authProvider).authStatus ==
+                          AuthStatus.authenticated) {
+                        context.pushNamed(WelcomeScreen.route);
+                      }
+                    });
                   },
           ),
         ),

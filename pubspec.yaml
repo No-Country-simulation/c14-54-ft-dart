@@ -34,10 +34,10 @@ dependencies:
   device_preview: ^1.1.0
   dio: ^5.3.3
   firebase_auth: ^4.11.1
-
   firebase_core: ^2.19.0
   flutter:
     sdk: flutter
+  flutter_dotenv: ^5.1.0
   flutter_riverpod: ^2.4.3
   flutter_svg: ^2.0.7
   font_awesome_flutter: ^10.6.0
@@ -68,6 +68,7 @@ flutter:
   assets:
     - assets/images/onboarding/
     - assets/images/user/profile/
+    - .env
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -374,6 +374,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_dotenv:
+    dependency: "direct main"
+    description:
+      name: flutter_dotenv
+      sha256: "9357883bdd153ab78cbf9ffa07656e336b8bbb2b5a3ca596b0b27e119f7c7d77"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.1.0"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -391,10 +399,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_riverpod
-      sha256: e667e406a74d67715f1fa0bd941d9ded49aff72f3a9f4440a36aece4e8d457a7
+      sha256: bdba94be666ecb1beeb0f5a748d96cdd6a37215f27e6b48c7673b95cecb800c8
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.3"
+    version: "2.4.4"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -753,10 +761,10 @@ packages:
     dependency: "direct dev"
     description:
       name: riverpod_generator
-      sha256: "62f5dd4d169f71466c98b89426e6345c77a00286a630837ab78ff91ec6c0c7cc"
+      sha256: "0a1c8eeb3dba2ce704eb1a4c3b8043716d52bedaaaa5b2725e0bde67ca38a46e"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.4"
+    version: "2.3.5"
   riverpod_lint:
     dependency: "direct dev"
     description:
