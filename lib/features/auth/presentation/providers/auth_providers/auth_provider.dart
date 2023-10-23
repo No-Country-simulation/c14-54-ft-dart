@@ -70,7 +70,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     // }
   }
 
-  _setLoggedUser(User user) async {
+  _setLoggedUser(UserEntity user) async {
     state = state.copyWith(
       user: user,
       authStatus: AuthStatus.authenticated,
@@ -91,7 +91,7 @@ enum AuthStatus { checking, authenticated, notAuthenticated }
 
 class AuthState {
   final AuthStatus authStatus;
-  final User? user;
+  final UserEntity? user;
   final String errorMessage;
 
   AuthState({
@@ -102,7 +102,7 @@ class AuthState {
 
   AuthState copyWith({
     AuthStatus? authStatus,
-    final User? user,
+    final UserEntity? user,
     String? errorMessage,
   }) =>
       AuthState(

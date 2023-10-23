@@ -1,23 +1,25 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gestion_inventario/features/auth/domain/domain.dart';
+import 'package:gestion_inventario/features/auth/infrastructure/infrastructure.dart';
 
 class AuthDatasourceFirebase extends AuthDataSource {
   final db = FirebaseFirestore.instance;
 
   @override
-  Future<User> login({required String email, required String password}) async {
+  Future<UserEntity> login(
+      {required String email, required String password}) async {
     try {
       final userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-      userCredential.user;
-      return userCredential.user!;
+
+      return UserMapper.userFirebaseToEntity(userCredential.user!);
     } on FirebaseAuthException catch (e) {
       return throw Exception(e.message);
     }
   }
 
   @override
-  Future<User> register(
+  Future<UserEntity> register(
       {required String email,
       required String password,
       required String username,
@@ -29,15 +31,21 @@ class AuthDatasourceFirebase extends AuthDataSource {
         password: password,
       );
       final User? user = userCredential.user;
-      if (user != null) {
-        _createUserDocument(
-          uid: user.uid,
-          username: username,
-          email: email,
-          phone: phone,
-        );
-      }
-      return userCredential.user!;
+
+      _createUserDocument(
+        uid: user!.uid,
+        username: username,
+        email: email,
+        phone: phone,
+      );
+      final UserEntity userEntity = UserEntity(
+        id: user.uid,
+        username: username,
+        email: email,
+        phone: phone,
+        photoPath: '',
+      );
+      return userEntity;
     } on FirebaseAuthException catch (e) {
       return throw Exception(e);
     }

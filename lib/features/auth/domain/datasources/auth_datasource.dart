@@ -1,11 +1,11 @@
 import 'package:gestion_inventario/features/auth/domain/domain.dart';
 
 abstract class AuthDataSource {
-  Future<User> login({
+  Future<UserEntity> login({
     required String email,
     required String password,
   });
-  Future<User> register({
+  Future<UserEntity> register({
     required String email,
     required String password,
     required String username,

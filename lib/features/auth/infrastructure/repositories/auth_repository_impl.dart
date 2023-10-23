@@ -6,7 +6,7 @@ class AuthRepositoryImpl extends AuthRepository {
   AuthRepositoryImpl({required this.dataSource});
 
   @override
-  Future<User> login({required String email, required String password}) {
+  Future<UserEntity> login({required String email, required String password}) {
     return dataSource.login(
       email: email,
       password: password,
@@ -14,7 +14,7 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<User> register(
+  Future<UserEntity> register(
       {required String email,
       required String password,
       required String username,
