@@ -29,7 +29,7 @@ class WelcomeScreen extends ConsumerWidget {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    _WelcomeTitle(text: 'Hola ${user!.id}'),
+                    _WelcomeTitle(text: 'Hola ${user!.username}'),
                     const SizedBox(
                       height: 10,
                     ),

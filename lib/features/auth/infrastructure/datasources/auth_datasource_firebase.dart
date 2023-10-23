@@ -11,8 +11,16 @@ class AuthDatasourceFirebase extends AuthDataSource {
     try {
       final userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-
-      return UserMapper.userFirebaseToEntity(userCredential.user!);
+      return await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userCredential.user!.uid)
+          .get()
+          .then(
+            (json) => UserMapper.userFirestoreToEntity(
+              id: userCredential.user!.uid,
+              json: json.data()!,
+            ),
+          );
     } on FirebaseAuthException catch (e) {
       return throw Exception(e.message);
     }
