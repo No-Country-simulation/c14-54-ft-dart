@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gestion_inventario/features/auth/presentation/providers/auth_providers/register_providers/register_form_provider.dart';
 import 'package:gestion_inventario/features/auth/presentation/providers/providers.dart';
 import 'package:gestion_inventario/features/auth/presentation/screens/screens.dart';
 import 'package:gestion_inventario/features/auth/presentation/widgets/widgets.dart';
-import 'package:gestion_inventario/features/shared/widgets/shared.dart';
+import 'package:gestion_inventario/features/shared/shared.dart';
 import 'package:go_router/go_router.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -59,6 +60,7 @@ class _RegisterForm extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final colors = Theme.of(context).colorScheme;
+    final registerForm = ref.watch(registerFormProvider);
 
     return Column(
       children: [
@@ -70,26 +72,35 @@ class _RegisterForm extends ConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              const CustomTextFormField(
+              CustomTextFormField(
                 label: 'Nombre de usuario',
                 hint: 'juandpt',
                 keyboardType: TextInputType.name,
-                onChanged: null,
-                errorMessage: null,
+                onChanged:
+                    ref.read(registerFormProvider.notifier).onUsernameChanged,
+                errorMessage: registerForm.isFormPosted
+                    ? registerForm.username.errorMessage
+                    : null,
               ),
-              const CustomTextFormField(
+              CustomTextFormField(
                 label: 'Correo',
                 hint: 'juandpt@mail.com',
                 keyboardType: TextInputType.emailAddress,
-                onChanged: null,
-                errorMessage: null,
+                onChanged:
+                    ref.read(registerFormProvider.notifier).onEmailChanged,
+                errorMessage: registerForm.isFormPosted
+                    ? registerForm.email.errorMessage
+                    : null,
               ),
-              const CustomTextFormField(
+              CustomTextFormField(
                 label: 'Teléfono',
                 hint: '3123456789',
                 keyboardType: TextInputType.phone,
-                onChanged: null,
-                errorMessage: null,
+                onChanged:
+                    ref.read(registerFormProvider.notifier).onPhoneChanged,
+                errorMessage: registerForm.isFormPosted
+                    ? registerForm.phone.errorMessage
+                    : null,
               ),
               CustomTextFormField(
                 label: 'Contraseña',
@@ -106,10 +117,12 @@ class _RegisterForm extends ConsumerWidget {
                         .update((state) => !state);
                   },
                 ),
-                onFieldSubmitted: null,
                 obscureText: ref.watch(obscureTextProvider),
-                onChanged: null,
-                errorMessage: null,
+                onChanged:
+                    ref.read(registerFormProvider.notifier).onPasswordChanged,
+                errorMessage: registerForm.isFormPosted
+                    ? registerForm.password.errorMessage
+                    : null,
               ),
               CustomTextFormField(
                 label: 'Confirme la contraseña',
@@ -126,10 +139,26 @@ class _RegisterForm extends ConsumerWidget {
                         .update((state) => !state);
                   },
                 ),
-                onFieldSubmitted: null,
+                onFieldSubmitted: (_) async {
+                  await ref
+                      .read(registerFormProvider.notifier)
+                      .onFormSubmit()
+                      .then(
+                    (_) {
+                      if (registerForm.isValid) {
+                        context.pushNamed(LoginScreen.route);
+                        showSnackbar(context, 'Registro Exitoso');
+                        ref.invalidate(registerFormProvider);
+                      }
+                    },
+                  );
+                },
                 obscureText: ref.watch(obscureTextProvider),
-                onChanged: null,
-                errorMessage: null,
+                onChanged:
+                    ref.watch(registerFormProvider.notifier).rePasswordChanged,
+                errorMessage: registerForm.passwordIsMatch
+                    ? null
+                    : 'Las contraseñas no coinciden',
               ),
             ],
           ),
@@ -140,7 +169,20 @@ class _RegisterForm extends ConsumerWidget {
           child: CustomFilledButton(
             text: 'CONFIRMAR',
             buttonColor: colors.primary,
-            onPressed: () {},
+            onPressed: registerForm.isPosting
+                ? null
+                : () async {
+                    await ref
+                        .read(registerFormProvider.notifier)
+                        .onFormSubmit()
+                        .then((_) {
+                      if (registerForm.isValid) {
+                        context.pushNamed(LoginScreen.route);
+                        showSnackbar(context, 'Registro Exitoso');
+                        ref.invalidate(registerFormProvider);
+                      }
+                    });
+                  },
           ),
         ),
         const SizedBox(height: 10),

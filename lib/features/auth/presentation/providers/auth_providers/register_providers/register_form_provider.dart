@@ -3,10 +3,8 @@ import 'package:formz/formz.dart';
 import 'package:gestion_inventario/features/auth/presentation/providers/providers.dart';
 import 'package:gestion_inventario/features/shared/infrastructure/inputs/inputs.dart';
 
-//Provider
-
 final registerFormProvider =
-    StateNotifierProvider.autoDispose<RegisterFormNotifier, RegisterFormState>(
+    StateNotifierProvider.autoDispose<RegisterFormNotifier, RegsiterFormState>(
         (ref) {
   final registerUserCallBack = ref.watch(authProvider.notifier).registerUser;
   return RegisterFormNotifier(registerUserCallBack);
@@ -14,15 +12,51 @@ final registerFormProvider =
 
 //Notifier
 
-class RegisterFormNotifier extends StateNotifier<RegisterFormState> {
-  final Future<void> Function(String, String) registerUserCallBack;
-  RegisterFormNotifier(this.registerUserCallBack) : super(RegisterFormState());
+class RegisterFormNotifier extends StateNotifier<RegsiterFormState> {
+  final Future<void> Function({
+    required String email,
+    required String password,
+    required String phone,
+    required String username,
+  }) registerUserCallBack;
+  RegisterFormNotifier(this.registerUserCallBack) : super(RegsiterFormState());
 
   onEmailChanged(String value) {
     final newEmail = Email.dirty(value: value);
     state = state.copyWith(
       email: newEmail,
-      isValid: Formz.validate([newEmail, state.password]),
+      isValid: Formz.validate([
+        newEmail,
+        state.password,
+        state.username,
+        state.phone,
+      ]),
+    );
+  }
+
+  onPhoneChanged(String value) {
+    final newPhone = Phone.dirty(value: value);
+    state = state.copyWith(
+      phone: newPhone,
+      isValid: Formz.validate([
+        newPhone,
+        state.password,
+        state.username,
+        state.email,
+      ]),
+    );
+  }
+
+  onUsernameChanged(String value) {
+    final newUsername = Username.dirty(value: value);
+    state = state.copyWith(
+      username: newUsername,
+      isValid: Formz.validate([
+        newUsername,
+        state.password,
+        state.email,
+        state.phone,
+      ]),
     );
   }
 
@@ -30,17 +64,40 @@ class RegisterFormNotifier extends StateNotifier<RegisterFormState> {
     final newPassword = Password.dirty(value: value);
     state = state.copyWith(
       password: newPassword,
-      isValid: Formz.validate([newPassword, state.email]),
+      isValid: Formz.validate([
+        newPassword,
+        state.email,
+        state.username,
+        state.phone,
+      ]),
     );
   }
 
-  onFormSubmit() async {
+  void rePasswordChanged(String rePassword) {
+    final newPassword = state.password.value;
+    if (newPassword == rePassword) {
+      state = state.copyWith(passwordIsMatch: true);
+    } else {
+      state = state.copyWith(passwordIsMatch: false);
+    }
+  }
+
+  Future<void> onFormSubmit() async {
     _touchEveryField();
-    if (!state.isValid) return;
+
+    if (!state.isValid || !state.passwordIsMatch) return;
     state = state.copyWith(
       isPosting: true,
     );
-    await registerUserCallBack(state.email.value, state.password.value);
+
+    await registerUserCallBack(
+      email: state.email.value,
+      password: state.password.value,
+      phone: state.phone.value,
+      username: state.username.value,
+    );
+    await Future.delayed(const Duration(milliseconds: 500));
+
     state = state.copyWith(
       isPosting: false,
     );
@@ -49,49 +106,69 @@ class RegisterFormNotifier extends StateNotifier<RegisterFormState> {
   _touchEveryField() {
     final email = Email.dirty(value: state.email.value);
     final password = Password.dirty(value: state.password.value);
+    final username = Username.dirty(value: state.username.value);
+    final phone = Phone.dirty(value: state.phone.value);
     state = state.copyWith(
       isFormPosted: true,
       email: email,
       password: password,
-      isValid: Formz.validate([email, password]),
+      passwordIsMatch: state.passwordIsMatch,
+      phone: phone,
+      username: username,
+      isValid: Formz.validate(
+        [
+          email,
+          password,
+          username,
+          phone,
+        ],
+      ),
     );
   }
 }
 
 //State
 
-class RegisterFormState {
+class RegsiterFormState {
   final bool isPosting;
   final bool isFormPosted;
   final bool isValid;
   final Email email;
-  final Password password;
   final Phone phone;
-  final Username userName;
+  final Username username;
+  final Password password;
+  final bool passwordIsMatch;
 
-  RegisterFormState({
-    this.phone = const Phone.pure(),
-    this.userName = const Username.pure(),
+  RegsiterFormState({
+    this.passwordIsMatch = true,
     this.isPosting = false,
     this.isFormPosted = false,
     this.isValid = false,
     this.email = const Email.pure(),
     this.password = const Password.pure(),
+    this.phone = const Phone.pure(),
+    this.username = const Username.pure(),
   });
 
-  RegisterFormState copyWith({
+  RegsiterFormState copyWith({
     final bool? isPosting,
     final bool? isFormPosted,
     final bool? isValid,
     final Email? email,
     final Password? password,
+    final bool? passwordIsMatch,
+    final Phone? phone,
+    final Username? username,
   }) =>
-      RegisterFormState(
+      RegsiterFormState(
         isPosting: isPosting ?? this.isPosting,
         isFormPosted: isFormPosted ?? this.isFormPosted,
         isValid: isValid ?? this.isValid,
         email: email ?? this.email,
         password: password ?? this.password,
+        passwordIsMatch: passwordIsMatch ?? this.passwordIsMatch,
+        phone: phone ?? this.phone,
+        username: username ?? this.username,
       );
   @override
   String toString() {
@@ -101,6 +178,10 @@ class RegisterFormState {
     isValid:$isValid,
     emailt:$email,
     password:$password
+    isPasswordMatch:$passwordIsMatch
+    phone:$phone
+    username:$username
+    
 ''';
   }
 }

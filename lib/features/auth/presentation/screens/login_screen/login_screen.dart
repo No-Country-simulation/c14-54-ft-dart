@@ -5,7 +5,7 @@ import 'package:gestion_inventario/features/auth/presentation/providers/provider
 import 'package:gestion_inventario/features/auth/presentation/screens/screens.dart';
 
 import 'package:gestion_inventario/features/auth/presentation/widgets/widgets.dart';
-import 'package:gestion_inventario/features/shared/widgets/shared.dart';
+import 'package:gestion_inventario/features/shared/shared.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatelessWidget {

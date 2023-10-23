@@ -26,12 +26,39 @@ class AuthNotifier extends StateNotifier<AuthState> {
       final user = await authRepository.login(email: email, password: password);
       _setLoggedUser(user);
       state = state.copyWith(authStatus: AuthStatus.authenticated, user: user);
+    } on FirebaseAuth catch (e) {
+      logout(e.toString());
     } catch (e) {
-      logout('Error no controlado');
+      logout('Credenciales incorrectas');
     }
   }
 
-  Future<void> registerUser(String email, String password) async {}
+  Future<void> registerUser({
+    required String email,
+    required String password,
+    required String username,
+    required String phone,
+  }) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    try {
+      final user = await authRepository.register(
+        email: email,
+        password: password,
+        username: username,
+        phone: phone,
+      );
+      state = state.copyWith(
+        user: user,
+        errorMessage: '',
+        authStatus: AuthStatus.notAuthenticated,
+      );
+    } on FirebaseAuthException catch (e) {
+      logout(e.toString());
+    } catch (e) {
+      logout('Error al crear el usuario');
+    }
+  }
+
   void checkAuthStatus() async {
     // if (token == null) return logout();
 
@@ -44,7 +71,6 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   _setLoggedUser(User user) async {
-    // await keyValueStorageService.setKeyValue('token', user.token);
     state = state.copyWith(
       user: user,
       authStatus: AuthStatus.authenticated,

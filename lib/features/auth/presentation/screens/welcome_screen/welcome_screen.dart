@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gestion_inventario/features/auth/presentation/providers/auth_providers/auth_provider.dart';
-import 'package:gestion_inventario/features/shared/widgets/shared.dart';
+import 'package:gestion_inventario/features/shared/shared.dart';
 import 'welcome.dart';
 
 class WelcomeScreen extends ConsumerWidget {
@@ -12,7 +12,7 @@ class WelcomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(authProvider).user;
-    
+
     final colors = Theme.of(context).colorScheme;
     final textStyle = Theme.of(context)
         .textTheme
@@ -29,7 +29,7 @@ class WelcomeScreen extends ConsumerWidget {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                     _WelcomeTitle(text: 'Hola ${user!.fullname}'),
+                    _WelcomeTitle(text: 'Hola ${user!.displayName}'),
                     const SizedBox(
                       height: 10,
                     ),
