@@ -167,9 +167,10 @@ class _LoginForm extends ConsumerWidget {
                 ref.invalidate(obscureTextProvider);
               },
               child: const Text('Crea una aquí'),
-            )
+            ),
           ],
         ),
+        const SizedBox(height: 100),
       ],
     );
   }

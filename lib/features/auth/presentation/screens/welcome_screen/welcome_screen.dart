@@ -34,7 +34,11 @@ class WelcomeScreen extends ConsumerWidget {
                       height: 10,
                     ),
                     const _WelcomeSubTitle(
-                        text: 'Bienvenido a Gestión de inventarios'),
+                        text: 'Bienvenido a Gestión de inventarios de'),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    _WelcomeTitle(text: user.businessname),
                     const _ProfilePicture(
                         path: 'assets/images/user/profile/profile.svg'),
                     CustomFilledButton(
@@ -106,7 +110,7 @@ class _WelcomeSubTitle extends StatelessWidget {
     final colors = Theme.of(context).colorScheme;
     final textStyle = Theme.of(context).textTheme.bodyMedium!.copyWith(
           color: colors.background,
-          fontSize: 18,
+          fontSize: 20,
           fontWeight: FontWeight.w400,
         );
     return Text(

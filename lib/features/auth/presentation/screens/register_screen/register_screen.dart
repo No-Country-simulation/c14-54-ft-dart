@@ -83,6 +83,17 @@ class _RegisterForm extends ConsumerWidget {
                     : null,
               ),
               CustomTextFormField(
+                label: 'Nombre de negocio',
+                hint: 'Papelería Juan',
+                keyboardType: TextInputType.name,
+                onChanged: ref
+                    .read(registerFormProvider.notifier)
+                    .onBusinessNameChanged,
+                errorMessage: registerForm.isFormPosted
+                    ? registerForm.businessname.errorMessage
+                    : null,
+              ),
+              CustomTextFormField(
                 label: 'Correo',
                 hint: 'juandpt@mail.com',
                 keyboardType: TextInputType.emailAddress,

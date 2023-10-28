@@ -14,6 +14,7 @@ final registerFormProvider =
 
 class RegisterFormNotifier extends StateNotifier<RegsiterFormState> {
   final Future<void> Function({
+    required String businessname,
     required String email,
     required String password,
     required String phone,
@@ -30,6 +31,7 @@ class RegisterFormNotifier extends StateNotifier<RegsiterFormState> {
         state.password,
         state.username,
         state.phone,
+        state.businessname
       ]),
     );
   }
@@ -43,6 +45,7 @@ class RegisterFormNotifier extends StateNotifier<RegsiterFormState> {
         state.password,
         state.username,
         state.email,
+        state.businessname
       ]),
     );
   }
@@ -56,6 +59,22 @@ class RegisterFormNotifier extends StateNotifier<RegsiterFormState> {
         state.password,
         state.email,
         state.phone,
+        state.businessname
+      ]),
+    );
+  }
+
+  onBusinessNameChanged(String value) {
+    final newBusinessname = Businessname.dirty(value: value);
+    state = state.copyWith(
+      businessname: newBusinessname,
+      isValid: Formz.validate([
+        newBusinessname,
+        state.username,
+        state.password,
+        state.email,
+        state.phone,
+        state.businessname
       ]),
     );
   }
@@ -69,6 +88,7 @@ class RegisterFormNotifier extends StateNotifier<RegsiterFormState> {
         state.email,
         state.username,
         state.phone,
+        state.businessname
       ]),
     );
   }
@@ -95,6 +115,7 @@ class RegisterFormNotifier extends StateNotifier<RegsiterFormState> {
       password: state.password.value,
       phone: state.phone.value,
       username: state.username.value,
+      businessname: state.businessname.value,
     );
     await Future.delayed(const Duration(milliseconds: 500));
 
@@ -136,10 +157,12 @@ class RegsiterFormState {
   final Email email;
   final Phone phone;
   final Username username;
+  final Businessname businessname;
   final Password password;
   final bool passwordIsMatch;
 
   RegsiterFormState({
+    this.businessname = const Businessname.pure(),
     this.passwordIsMatch = true,
     this.isPosting = false,
     this.isFormPosted = false,
@@ -159,6 +182,7 @@ class RegsiterFormState {
     final bool? passwordIsMatch,
     final Phone? phone,
     final Username? username,
+    final Businessname? businessname,
   }) =>
       RegsiterFormState(
         isPosting: isPosting ?? this.isPosting,
@@ -169,6 +193,7 @@ class RegsiterFormState {
         passwordIsMatch: passwordIsMatch ?? this.passwordIsMatch,
         phone: phone ?? this.phone,
         username: username ?? this.username,
+        businessname: businessname ?? this.businessname,
       );
   @override
   String toString() {

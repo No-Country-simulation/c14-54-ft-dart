@@ -10,5 +10,6 @@ abstract class AuthDataSource {
     required String password,
     required String username,
     required String phone,
+    required String businessname,
   });
 }

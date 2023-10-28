@@ -37,10 +37,12 @@ class AuthNotifier extends StateNotifier<AuthState> {
     required String password,
     required String username,
     required String phone,
+    required String businessname,
   }) async {
     await Future.delayed(const Duration(milliseconds: 500));
     try {
       final user = await authRepository.register(
+        businessname: businessname,
         email: email,
         password: password,
         username: username,

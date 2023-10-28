@@ -27,11 +27,13 @@ class AuthDatasourceFirebase extends AuthDataSource {
   }
 
   @override
-  Future<UserEntity> register(
-      {required String email,
-      required String password,
-      required String username,
-      required String phone}) async {
+  Future<UserEntity> register({
+    required String email,
+    required String password,
+    required String username,
+    required String businessname,
+    required String phone,
+  }) async {
     try {
       final userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -43,6 +45,7 @@ class AuthDatasourceFirebase extends AuthDataSource {
       _createUserDocument(
         uid: user!.uid,
         username: username,
+        businessname: businessname,
         email: email,
         phone: phone,
       );
@@ -52,6 +55,7 @@ class AuthDatasourceFirebase extends AuthDataSource {
         email: email,
         phone: phone,
         photoPath: '',
+        businessname: businessname,
       );
       return userEntity;
     } on FirebaseAuthException catch (e) {
@@ -64,11 +68,13 @@ class AuthDatasourceFirebase extends AuthDataSource {
     required String username,
     required String email,
     required String phone,
+    required String businessname,
   }) async {
     final user = <String, dynamic>{
       "username": username,
       "email": email,
       "phone": phone,
+      "businessName": businessname,
     };
 
     await db.collection("users").doc(uid).set(user);

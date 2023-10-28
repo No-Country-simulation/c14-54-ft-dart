@@ -7,6 +7,7 @@ class UserMapper {
         email: user.email ?? '',
         photoPath: user.photoURL,
         phone: user.phoneNumber ?? '',
+        businessname: '',
       );
   static UserEntity userFirestoreToEntity(
           {required Map<String, dynamic> json, required String id}) =>
@@ -16,5 +17,6 @@ class UserMapper {
         email: json['email'],
         photoPath: json['photoPath'] ?? '',
         phone: json['phone'],
+        businessname: json['businessName'],
       );
 }

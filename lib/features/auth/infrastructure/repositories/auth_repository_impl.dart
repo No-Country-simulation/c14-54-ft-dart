@@ -17,6 +17,7 @@ class AuthRepositoryImpl extends AuthRepository {
   Future<UserEntity> register(
       {required String email,
       required String password,
+      required String businessname,
       required String username,
       required String phone}) {
     return dataSource.register(
@@ -24,6 +25,7 @@ class AuthRepositoryImpl extends AuthRepository {
       password: password,
       username: username,
       phone: phone,
+      businessname: businessname,
     );
   }
 }
