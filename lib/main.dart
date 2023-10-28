@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_inventario/config/config.dart';
+import 'package:gestion_inventario/features/shared/infrastructure/services/services.dart';
 
-void main() => runApp(
-      DevicePreviewHelper.buildWithDevicePreview(
-        myApp: const ProviderScope(child: MyApp()),
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: '.env');
+  await FirebaseInitializeApp.initialize();
+  runApp(
+    ProviderScope(
+      child: DevicePreviewHelper.buildWithDevicePreview(
         enabled: false,
+        myApp: const MyApp(),
       ),
-    );
+    ),
+  );
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

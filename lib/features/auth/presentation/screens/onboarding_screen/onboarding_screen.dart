@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_inventario/features/auth/presentation/providers/providers.dart';
 import 'package:gestion_inventario/features/auth/presentation/screens/screens.dart';
-import 'package:gestion_inventario/features/shared/widgets/shared.dart';
+import 'package:gestion_inventario/features/shared/shared.dart';
 import 'package:go_router/go_router.dart';
 import 'onboarding.dart';
 

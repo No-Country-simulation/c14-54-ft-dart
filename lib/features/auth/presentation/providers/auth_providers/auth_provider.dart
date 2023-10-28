@@ -25,13 +25,41 @@ class AuthNotifier extends StateNotifier<AuthState> {
     try {
       final user = await authRepository.login(email: email, password: password);
       _setLoggedUser(user);
-      state = state.copyWith(authStatus: AuthStatus.authenticated, user: user);
+    } on FirebaseAuthException catch (e) {
+      logout(e.toString());
     } catch (e) {
-      logout('Error no controlado');
+      logout('Credenciales incorrectas');
     }
   }
 
-  Future<void> registerUser(String email, String password) async {}
+  Future<void> registerUser({
+    required String email,
+    required String password,
+    required String username,
+    required String phone,
+    required String businessname,
+  }) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    try {
+      final user = await authRepository.register(
+        businessname: businessname,
+        email: email,
+        password: password,
+        username: username,
+        phone: phone,
+      );
+      state = state.copyWith(
+        user: user,
+        errorMessage: '',
+        authStatus: AuthStatus.notAuthenticated,
+      );
+    } on FirebaseAuthException catch (e) {
+      logout(e.toString());
+    } catch (e) {
+      logout('Error al crear el usuario');
+    }
+  }
+
   void checkAuthStatus() async {
     // if (token == null) return logout();
 
@@ -43,8 +71,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     // }
   }
 
-  _setLoggedUser(User user) async {
-    // await keyValueStorageService.setKeyValue('token', user.token);
+  _setLoggedUser(UserEntity user) async {
     state = state.copyWith(
       user: user,
       authStatus: AuthStatus.authenticated,
@@ -65,7 +92,7 @@ enum AuthStatus { checking, authenticated, notAuthenticated }
 
 class AuthState {
   final AuthStatus authStatus;
-  final User? user;
+  final UserEntity? user;
   final String errorMessage;
 
   AuthState({
@@ -76,7 +103,7 @@ class AuthState {
 
   AuthState copyWith({
     AuthStatus? authStatus,
-    final User? user,
+    final UserEntity? user,
     String? errorMessage,
   }) =>
       AuthState(

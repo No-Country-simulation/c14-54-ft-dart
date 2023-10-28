@@ -56,6 +56,7 @@ class CustomTextFormField extends StatelessWidget {
           decoration: InputDecoration(
             contentPadding:
                 const EdgeInsets.only(top: 25, left: 15, bottom: 10),
+            // constraints: const BoxConstraints(maxHeight: 70),
 
             errorMaxLines: 2,
             suffixIcon: subfixIcon,
