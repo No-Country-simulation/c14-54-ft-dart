@@ -18,10 +18,6 @@ class HomeDatasourceFirebase extends HomeDataSource {
       ProductoEntitys productos =
           ProductMapper.listFirestoreEntitys(json: jsonD);
       List<ProductoEntity> inventario = productos.productoentity;
-      for (var element in inventario) {
-        print(element.nombre);
-        print(element.precioBase);
-      }
       return inventario;
     } catch (e) {
       throw Exception(e);

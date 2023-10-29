@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gestion_inventario/features/auth/presentation/providers/auth_providers/auth_provider.dart';
+import 'package:gestion_inventario/features/data/api/entities/screens/products_scrrens.dart';
 import 'package:gestion_inventario/features/shared/shared.dart';
+import 'package:go_router/go_router.dart';
 import 'welcome.dart';
 
 class WelcomeScreen extends ConsumerWidget {
@@ -29,7 +31,7 @@ class WelcomeScreen extends ConsumerWidget {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    _WelcomeTitle(text: 'Hola ${user!.username}'),
+                    // _WelcomeTitle(text: 'Hola ${user!.username}'),
                     const SizedBox(
                       height: 10,
                     ),
@@ -38,7 +40,7 @@ class WelcomeScreen extends ConsumerWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    _WelcomeTitle(text: user.businessname),
+                    // _WelcomeTitle(text: user.businessname),
                     const _ProfilePicture(
                         path: 'assets/images/user/profile/profile.svg'),
                     CustomFilledButton(
@@ -51,14 +53,16 @@ class WelcomeScreen extends ConsumerWidget {
                       height: 100,
                     ),
                     CustomFilledButton(
-                      text: 'Hola mundo',
+                      text: 'DATA',
                       buttonColor: colors.background,
                       textStyle: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                         color: colors.primary,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        context.pushNamed(HomeView.route);
+                      },
                     ),
                     TextButton(
                       onPressed: () {},
