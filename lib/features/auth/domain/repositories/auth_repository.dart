@@ -12,4 +12,9 @@ abstract class AuthRepository {
     required String phone,
     required String businessname,
   });
+  Future<String> uploadImage({
+    required String path,
+    required String id,
+  });
+  Future<UserEntity> getUser({required String id});
 }

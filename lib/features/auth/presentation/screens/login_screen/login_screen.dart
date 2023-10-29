@@ -52,21 +52,13 @@ class LoginScreen extends StatelessWidget {
 
 class _LoginForm extends ConsumerWidget {
   const _LoginForm();
-  void showSnackbar(BuildContext context, String errorMessage) {
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(errorMessage),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final loginForm = ref.watch(loginFormProvider);
     ref.listen(authProvider, (previous, next) {
       if (next.errorMessage.isEmpty) return;
-      showSnackbar(context, next.errorMessage);
+      customErrorMessage(context, next.errorMessage);
     });
 
     final colors = Theme.of(context).colorScheme;
@@ -113,7 +105,7 @@ class _LoginForm extends ConsumerWidget {
                       .then((_) {
                     if (ref.read(authProvider).authStatus ==
                         AuthStatus.authenticated) {
-                      context.pushNamed(WelcomeScreen.route);
+                      context.pushReplacementNamed(WelcomeScreen.route);
                     }
                   });
                 },
@@ -150,7 +142,7 @@ class _LoginForm extends ConsumerWidget {
                         .then((_) {
                       if (ref.read(authProvider).authStatus ==
                           AuthStatus.authenticated) {
-                        context.pushNamed(WelcomeScreen.route);
+                        context.pushReplacementNamed(WelcomeScreen.route);
                       }
                     });
                   },
