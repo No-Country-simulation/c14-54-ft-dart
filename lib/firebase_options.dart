@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
+import 'package:gestion_inventario/config/constants/enviroment.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -49,20 +50,20 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: '',
-    appId: '',
-    messagingSenderId: '',
-    projectId: 'gestion-inv',
-    storageBucket: 'gestion-inv.appspot.com',
+  static FirebaseOptions android = FirebaseOptions(
+    apiKey: Enviroment.firebaseApiKey,
+    appId: '1:84757708200:android:a6d3c56383d3ff99b7b19d',
+    messagingSenderId: Enviroment.messagingSenderId,
+    projectId: Enviroment.projectId,
+    storageBucket: 'gestiondeinventario-bb84e.appspot.com',
   );
 
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: '',
-    appId: '',
-    messagingSenderId: '',
-    projectId: 'gestion-inv',
-    storageBucket: 'gestion-inv.appspot.com',
+  static FirebaseOptions ios = FirebaseOptions(
+    apiKey: Enviroment.firebaseApiKey,
+    appId: '1:84757708200:ios:eafe36210aee7075b7b19d',
+    messagingSenderId: Enviroment.messagingSenderId,
+    projectId: Enviroment.projectId,
+    storageBucket: 'gestiondeinventario-bb84e.appspot.com',
     iosBundleId: 'com.example.gestionInventario',
   );
 }

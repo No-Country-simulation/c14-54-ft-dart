@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "530000143198",
-    "project_id": "gestion-inv",
-    "storage_bucket": "gestion-inv.appspot.com"
+    "project_number": "84757708200",
+    "project_id": "gestiondeinventario-bb84e",
+    "storage_bucket": "gestiondeinventario-bb84e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:530000143198:android:8be14b00271a7e75f025cf",
+        "mobilesdk_app_id": "1:84757708200:android:a6d3c56383d3ff99b7b19d",
         "android_client_info": {
           "package_name": "com.example.gestion_inventario"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDMd91ET8fZdHrJCurQsBKrXi68Wyp7w_M"
+          "current_key": "AIzaSyAch-7XwtXmkwUp7k82Yc3iMUBDQqXrhgU"
         }
       ],
       "services": {

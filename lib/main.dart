@@ -1,34 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_inventario/config/config.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:logging/logging.dart';
-import 'firebase_options.dart';
+import 'package:gestion_inventario/features/shared/infrastructure/services/services.dart';
 
-// final log = Logger('ExampleLogger');
-void main() async {
-// void main() {
-  Logger.root.level = Level.ALL; // defaults to Level.INFO
-  Logger.root.onRecord.listen((record) {
-  print('${record.level.name}: ${record.time}: ${record.message}');
-  });
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-runApp(
-    DevicePreviewHelper.buildWithDevicePreview(
-      myApp: const ProviderScope(child: MyApp()),
-      enabled: false,
+  await dotenv.load(fileName: '.env');
+  await FirebaseInitializeApp.initialize();
+  runApp(
+    ProviderScope(
+      child: DevicePreviewHelper.buildWithDevicePreview(
+        enabled: false,
+        myApp: const MyApp(),
+      ),
     ),
   );
 }
-// void main() => runApp(
-//       DevicePreviewHelper.buildWithDevicePreview(
-//         myApp: const ProviderScope(child: MyApp()),
-//         enabled: false,
-//       ),
-//     );
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

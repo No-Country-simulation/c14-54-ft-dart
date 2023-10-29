@@ -3,17 +3,29 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
+<<<<<<< HEAD
 	<string>AIzaSyD9RQBN8EoLciMatvWG8Gs6fClYD0QpV20</string>
 	<key>GCM_SENDER_ID</key>
 	<string>530000143198</string>
+=======
+	<string>AIzaSyDRoj12WK_SpvQRh3cNDlNkPm9gyYLz_TI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>84757708200</string>
+>>>>>>> e959f53474d3e1bacb5431eca78b027876519f2a
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.example.gestionInventario</string>
 	<key>PROJECT_ID</key>
+<<<<<<< HEAD
 	<string>gestion-inv</string>
 	<key>STORAGE_BUCKET</key>
 	<string>gestion-inv.appspot.com</string>
+=======
+	<string>gestiondeinventario-bb84e</string>
+	<key>STORAGE_BUCKET</key>
+	<string>gestiondeinventario-bb84e.appspot.com</string>
+>>>>>>> e959f53474d3e1bacb5431eca78b027876519f2a
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +37,10 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
+<<<<<<< HEAD
 	<string>1:530000143198:ios:124e9de851fb7708f025cf</string>
+=======
+	<string>1:84757708200:ios:eafe36210aee7075b7b19d</string>
+>>>>>>> e959f53474d3e1bacb5431eca78b027876519f2a
 </dict>
 </plist>

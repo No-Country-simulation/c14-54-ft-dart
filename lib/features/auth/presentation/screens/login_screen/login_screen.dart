@@ -5,7 +5,7 @@ import 'package:gestion_inventario/features/auth/presentation/providers/provider
 import 'package:gestion_inventario/features/auth/presentation/screens/screens.dart';
 
 import 'package:gestion_inventario/features/auth/presentation/widgets/widgets.dart';
-import 'package:gestion_inventario/features/shared/widgets/shared.dart';
+import 'package:gestion_inventario/features/shared/shared.dart';
 import 'package:go_router/go_router.dart';
 
 // import '../screens.dart';
@@ -108,8 +108,17 @@ class _LoginForm extends ConsumerWidget {
                         .update((state) => !state);
                   },
                 ),
-                onFieldSubmitted: (_) =>
-                    ref.read(loginFormProvider.notifier).onFormSubmit(),
+                onFieldSubmitted: (_) async {
+                  await ref
+                      .read(loginFormProvider.notifier)
+                      .onFormSubmit()
+                      .then((_) {
+                    if (ref.read(authProvider).authStatus ==
+                        AuthStatus.authenticated) {
+                      context.pushNamed(WelcomeScreen.route);
+                    }
+                  });
+                },
                 obscureText: ref.watch(obscureTextProvider),
                 onChanged: (value) => ref
                     .read(loginFormProvider.notifier)
@@ -136,12 +145,16 @@ class _LoginForm extends ConsumerWidget {
             buttonColor: colors.primary,
             onPressed: loginForm.isPosting
                 ? null
-                : () {
-                    ref.read(loginFormProvider.notifier).onFormSubmit();
-                    if (ref.read(authProvider).authStatus ==
-                        AuthStatus.authenticated) {
-                      context.pushNamed(WelcomeScreen.route);
-                    }
+                : () async {
+                    await ref
+                        .read(loginFormProvider.notifier)
+                        .onFormSubmit()
+                        .then((_) {
+                      if (ref.read(authProvider).authStatus ==
+                          AuthStatus.authenticated) {
+                        context.pushNamed(WelcomeScreen.route);
+                      }
+                    });
                   },
           ),
         ),
@@ -156,9 +169,10 @@ class _LoginForm extends ConsumerWidget {
                 ref.invalidate(obscureTextProvider);
               },
               child: const Text('Crea una aquí'),
-            )
+            ),
           ],
         ),
+        const SizedBox(height: 100),
       ],
     );
   }
