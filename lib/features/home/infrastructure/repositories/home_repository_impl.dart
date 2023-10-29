@@ -7,8 +7,8 @@ class HomeRepositoryImpl extends HomeRepository {
 
   HomeRepositoryImpl(this.homeDataSource);
   @override
-  Future<List<ProductoEntity>> getProducts({required String url}) {
-    return homeDataSource.getProducts(url: url);
+  Future<List<ProductoEntity>> getProducts(String url) {
+    return homeDataSource.getProducts(url);
     // throw UnimplementedError();
   }
 }

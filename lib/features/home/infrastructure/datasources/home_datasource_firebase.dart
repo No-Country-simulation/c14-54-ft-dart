@@ -10,7 +10,7 @@ class HomeDatasourceFirebase extends HomeDataSource {
   final db = FirebaseFirestore.instance;
 
   @override
-  Future<List<ProductoEntity>> getProducts({required String url}) async {
+  Future<List<ProductoEntity>> getProducts(String url) async {
     final response = await Dio(BaseOptions(baseUrl: url)).get(url);
     try {
       var data = response.data;
