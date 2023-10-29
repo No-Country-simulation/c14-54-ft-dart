@@ -70,6 +70,12 @@ class AuthNotifier extends StateNotifier<AuthState> {
     //   logout();
     // }
   }
+  Future<void> updateUser() async {
+    final user = await authRepository.getUser(id: state.user!.id);
+    state = state.copyWith(
+      user: user,
+    );
+  }
 
   _setLoggedUser(UserEntity user) async {
     state = state.copyWith(

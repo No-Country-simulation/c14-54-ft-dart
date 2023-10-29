@@ -48,14 +48,6 @@ class RegisterScreen extends StatelessWidget {
 
 class _RegisterForm extends ConsumerWidget {
   const _RegisterForm();
-  void showSnackbar(BuildContext context, String errorMessage) {
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(errorMessage),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -158,7 +150,7 @@ class _RegisterForm extends ConsumerWidget {
                     (_) {
                       if (registerForm.isValid) {
                         context.pushNamed(LoginScreen.route);
-                        showSnackbar(context, 'Registro Exitoso');
+                        customErrorMessage(context, 'Registro Exitoso');
                         ref.invalidate(registerFormProvider);
                       }
                     },
@@ -189,7 +181,7 @@ class _RegisterForm extends ConsumerWidget {
                         .then((_) {
                       if (registerForm.isValid) {
                         context.pushNamed(LoginScreen.route);
-                        showSnackbar(context, 'Registro Exitoso');
+                        customErrorMessage(context, 'Registro Exitoso');
                         ref.invalidate(registerFormProvider);
                       }
                     });
