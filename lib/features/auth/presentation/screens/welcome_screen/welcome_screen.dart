@@ -41,78 +41,90 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
           WelcomeBackground(
             color: colors.primary,
           ),
-          SafeArea(
-            child: Center(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    _WelcomeTitle(text: 'Hola ${user!.username}'),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const _WelcomeSubTitle(
-                        text: 'Bienvenido a Gestión de inventarios de'),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    _WelcomeTitle(text: user.businessname),
-                    _ProfilePicture(path: path),
-                    CustomFilledButton(
-                      text: 'Elige foto de perfil',
-                      buttonColor: colors.background,
-                      textStyle: textStyle,
-                      onPressed: () async {
-                        await ref
-                            .read(profileImageProvider.notifier)
-                            .selectGalleryImage();
-                      },
-                    ),
-                    CustomFilledButton(
-                      text: 'Guardar',
-                      buttonColor: colors.background,
-                      textStyle: textStyle,
-                      onPressed: () async {
-                        final url = ref.read(profileImageProvider).path;
-                        await ref
-                            .read(profileImageProvider.notifier)
-                            .uploadImage(id: user.id)
-                            .whenComplete(() {
-                          if (url != '') {
-                            return customErrorMessage(
-                                context, 'Imagen guardada con exito');
-                          } else {
-                            return customErrorMessage(context, url);
-                          }
-                        });
-                      },
-                    ),
-                    const SizedBox(
-                      height: 100,
-                    ),
-                    CustomFilledButton(
-                      text: 'DATA',
-                      buttonColor: colors.background,
-                      textStyle: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                        color: colors.primary,
+          GestureDetector(
+            onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+            child: SafeArea(
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      _WelcomeTitle(text: 'Hola ${user!.username}'),
+                      const SizedBox(
+                        height: 10,
                       ),
-                      onPressed: () {
-                        context.pushNamed(HomeView.route);
-                      },
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Saltar',
-                        style: TextStyle(
-                          color: colors.background,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
+                      const _WelcomeSubTitle(
+                          text: 'Bienvenido a Gestión de inventarios de'),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      _WelcomeTitle(text: user.businessname),
+                      _ProfilePicture(path: path),
+                      CustomFilledButton(
+                        text: 'Elige foto de perfil',
+                        buttonColor: colors.background,
+                        textStyle: textStyle,
+                        onPressed: () async {
+                          await ref
+                              .read(profileImageProvider.notifier)
+                              .selectGalleryImage();
+                        },
+                      ),
+                      CustomFilledButton(
+                        text: 'Guardar',
+                        buttonColor: colors.background,
+                        textStyle: textStyle,
+                        onPressed: () async {
+                          final url = ref.read(profileImageProvider).path;
+                          await ref
+                              .read(profileImageProvider.notifier)
+                              .uploadImage(id: user.id)
+                              .whenComplete(() {
+                            if (url != '') {
+                              return customErrorMessage(
+                                  context, 'Imagen guardada con exito');
+                            } else {
+                              return customErrorMessage(context, url);
+                            }
+                          });
+                        },
+                      ),
+                      const SizedBox(
+                        height: 100,
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: CustomTextFormField(
+                          label: 'Link de descarga de archivo csv',
+                          hint: 'http://bit.ly/3Sc2v46',
                         ),
                       ),
-                    )
-                  ],
+                      CustomFilledButton(
+                        text: 'Cargar Inventario',
+                        buttonColor: colors.background,
+                        textStyle: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: colors.primary,
+                        ),
+                        onPressed: () {
+                          context.pushNamed(HomeView.route);
+                        },
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          context.pushReplacement('/home_screen');
+                        },
+                        child: Text(
+                          'Saltar',
+                          style: TextStyle(
+                            color: colors.background,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),

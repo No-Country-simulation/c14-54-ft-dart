@@ -1,10 +1,10 @@
 import 'package:gestion_inventario/features/auth/presentation/screens/onboarding_screen/onboarding.dart';
-import 'package:gestion_inventario/features/data/api/entities/screens/products_scrrens.dart';
+import 'package:gestion_inventario/features/home/presentation/screens/screens.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gestion_inventario/features/auth/presentation/screens/screens.dart';
 
 final appRouter = GoRouter(
-  initialLocation: '/welcome_screen',
+  initialLocation: '/onboarding',
   routes: [
     GoRoute(
       name: LoginScreen.route,
@@ -42,9 +42,9 @@ final appRouter = GoRouter(
       builder: (context, state) => const WelcomeScreen(),
     ),
     GoRoute(
-      name: HomeView.route,
-      path: '/H',
-      builder: (context, state) => const HomeView(),
+      name: HomeScreen.route,
+      path: '/home_screen',
+      builder: (context, state) => const HomeScreen(),
     ),
   ],
 );
