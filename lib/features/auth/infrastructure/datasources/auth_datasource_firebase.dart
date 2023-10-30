@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:gestion_inventario/features/auth/domain/domain.dart';
 import 'package:gestion_inventario/features/auth/infrastructure/infrastructure.dart';
 
@@ -78,5 +81,37 @@ class AuthDatasourceFirebase extends AuthDataSource {
     };
 
     await db.collection("users").doc(uid).set(user);
+  }
+
+  @override
+  Future<String> uploadImage({required String path, required String id}) {
+    final FirebaseStorage storage = FirebaseStorage.instance;
+    try {
+      // final String fileName = path.split('/').last;
+      const String fileName = 'profile_picture';
+      final ref =
+          storage.ref().child('profile_picture/users/$id').child(fileName);
+      final uploadTask = ref.putFile(File(path));
+      uploadTask.whenComplete(() async {
+        final url = await ref.getDownloadURL();
+        await db.collection('users').doc(id).update({'photoPath': url});
+        return url;
+      });
+      return Future.value('');
+    } on FirebaseException catch (e) {
+      return Future.error(e);
+    }
+  }
+
+  @override
+  Future<UserEntity> getUser({required String id}) {
+    return db
+        .collection('users')
+        .doc(id)
+        .get()
+        .then((json) => UserMapper.userFirestoreToEntity(
+              id: id,
+              json: json.data()!,
+            ));
   }
 }

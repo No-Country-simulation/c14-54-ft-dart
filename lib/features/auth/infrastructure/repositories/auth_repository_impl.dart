@@ -28,4 +28,19 @@ class AuthRepositoryImpl extends AuthRepository {
       businessname: businessname,
     );
   }
+
+  @override
+  Future<String> uploadImage({required String path, required String id}) {
+    return dataSource.uploadImage(
+      path: path,
+      id: id,
+    );
+  }
+
+  @override
+  Future<UserEntity> getUser({required String id}) {
+    return dataSource.getUser(
+      id: id,
+    );
+  }
 }
