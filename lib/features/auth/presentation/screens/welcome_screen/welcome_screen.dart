@@ -5,7 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gestion_inventario/features/auth/presentation/providers/providers.dart';
-import 'package:gestion_inventario/features/data/api/entities/screens/products_scrrens.dart';
+
+import 'package:gestion_inventario/features/home/presentation/providers/providers.dart';
 import 'package:gestion_inventario/features/home/presentation/screens/screens.dart';
 import 'package:gestion_inventario/features/shared/shared.dart';
 import 'package:go_router/go_router.dart';
@@ -92,11 +93,16 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                       const SizedBox(
                         height: 100,
                       ),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: CustomTextFormField(
                           label: 'Link de descarga de archivo csv',
                           hint: 'http://bit.ly/3Sc2v46',
+                          onChanged: (link) {
+                            return ref
+                                .read(linkCsvProvider.notifier)
+                                .update((state) => link);
+                          },
                         ),
                       ),
                       CustomFilledButton(
@@ -107,8 +113,28 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                           fontSize: 18,
                           color: colors.primary,
                         ),
-                        onPressed: () {
-                          context.pushNamed(HomeView.route);
+                        onPressed: () async {
+                          await ref
+                              .read(loadCsvProvider.notifier)
+                              .loadCsvByQuery(
+                                ref.read(linkCsvProvider),
+                              )
+                              .then((response) async {
+                            if (response.isNotEmpty) {
+                              await ref
+                                  .read(loadCsvProvider.notifier)
+                                  .upLoadProductsFirebase(response, user.id)
+                                  .then(
+                                    (value) => context.pushReplacementNamed(
+                                      HomeScreen.route,
+                                      pathParameters: {'userId': user.id},
+                                    ),
+                                  );
+                            } else {
+                              return customErrorMessage(context,
+                                  'Error en el formato no se pudo cargar el archivo');
+                            }
+                          });
                         },
                       ),
                       TextButton(

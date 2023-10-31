@@ -28,9 +28,11 @@ final appRouter = GoRouter(
         ),
         GoRoute(
           name: HomeScreen.route,
-          path: 'home',
+          path: 'home/:userId',
           builder: (context, state) {
-            return const HomeScreen();
+            return HomeScreen(
+              userId: state.pathParameters['userId'] ?? '',
+            );
           },
         ),
       ],
