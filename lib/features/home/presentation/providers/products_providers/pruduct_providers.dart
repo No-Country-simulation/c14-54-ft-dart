@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_inventario/features/home/domain/entities/producto_entity.dart';
-import 'package:gestion_inventario/features/home/presentation/providers/product_repository_provider.dart';
+import 'package:gestion_inventario/features/home/presentation/providers/products_providers/product_repository_provider.dart';
 
 final searchQueryProvider = StateProvider<String>((ref) => '');
 

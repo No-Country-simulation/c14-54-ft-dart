@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_inventario/features/data/api/entities/screens/listproduct.dart';
-import 'package:gestion_inventario/features/home/presentation/providers/pruduct_providers.dart';
+import 'package:gestion_inventario/features/home/presentation/providers/products_providers/pruduct_providers.dart';
 
 class HomeView extends ConsumerStatefulWidget {
   static const route = 'H';

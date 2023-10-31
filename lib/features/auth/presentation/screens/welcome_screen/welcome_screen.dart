@@ -1,11 +1,12 @@
+import 'package:flutter/material.dart';
 import 'dart:io';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gestion_inventario/features/auth/presentation/providers/providers.dart';
 import 'package:gestion_inventario/features/data/api/entities/screens/products_scrrens.dart';
+import 'package:gestion_inventario/features/home/presentation/screens/screens.dart';
 import 'package:gestion_inventario/features/shared/shared.dart';
 import 'package:go_router/go_router.dart';
 import 'welcome.dart';
@@ -112,7 +113,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-                          context.pushReplacement('/home_screen');
+                          context.pushReplacementNamed(HomeScreen.route);
                         },
                         child: Text(
                           'Saltar',
