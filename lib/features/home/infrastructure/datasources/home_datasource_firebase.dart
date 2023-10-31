@@ -1,47 +1,49 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'package:gestion_inventario/features/home/domain/datasources/home_datasources.dart';
-import 'package:gestion_inventario/features/home/domain/entities/producto_entity.dart';
-import 'package:dio/dio.dart';
-import 'package:csv/csv.dart';
-import 'package:gestion_inventario/features/home/infrastructure/mappers/product_mappers.dart';
+import 'package:gestion_inventario/features/home/domain/domain.dart';
+import 'package:gestion_inventario/features/home/infrastructure/infrastructure.dart';
 
 class HomeDatasourceFirebase extends HomeDataSource {
   final db = FirebaseFirestore.instance;
 
   @override
-  Future<List<ProductoEntity>> getProducts(String url) async {
-    final response = await Dio(BaseOptions(baseUrl: url)).get(url);
+  Future<List<ProductEntity>> getProducts(String url) async {
+    String userId = url;
     try {
-      var data = response.data;
-      Map<String, dynamic> jsonD = csvToJson(data);
-      ProductoEntitys productos =
-          ProductMapper.listFirestoreEntitys(json: jsonD);
-      List<ProductoEntity> inventario = productos.productoentity;
+      final response =
+          await db.collection('users').doc(userId).collection('products').get();
+      List<ProductEntity> products = [];
+      for (var product in response.docs) {
+        ProductEntity producto =
+            ProductMapper.mapFirestoreToEntity(map: product.data());
 
-      
-      return inventario;
+        products.add(producto);
+      }
+      return products;
     } catch (e) {
       throw Exception(e);
     }
   }
 
-  Map<String, dynamic> itemJson(valueList, List<String> claveList) {
-    var h = 0;
-    var placeN = {for (var value in valueList) claveList[h++]: value};
-    return placeN;
-  }
+  @override
+  Future<String> upLoadProducts({
+    required List<ProductEntity> products,
+    required String userId,
+  }) async {
+    try {
+      for (ProductEntity product in products) {
+        await db.collection('users').doc(userId).collection('products').add({
+          'name': product.name,
+          'description': product.description,
+          'baseprice': product.basePrice,
+          'saleprice': product.salePrice,
+          'stock': product.stock,
+          'imageUrl': product.imageUrl,
+        });
+      }
 
-  Map<String, dynamic> csvToJson(data) {
-    List<List<dynamic>> df = const CsvToListConverter().convert(data);
-    List itemsP = [];
-    List<String> claveList = List<String>.from(df[0]);
-    for (var i = 1; i < df.length; i++) {
-      List valueList = df[i];
-      Map placeN = itemJson(valueList, claveList);
-      itemsP.add(placeN);
+      return Future.value('Carga exitosa');
+    } on FirebaseException catch (e) {
+      return Future.value(e.toString());
     }
-    Map<String, dynamic> dataJson = {"Producto": itemsP};
-    return dataJson;
   }
 }

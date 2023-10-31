@@ -1,29 +1,31 @@
-
-import 'package:gestion_inventario/features/home/domain/entities/producto_entity.dart';
+import 'package:gestion_inventario/features/home/domain/domain.dart';
 
 class ProductMapper {
-  static ProductoEntity productoFirebaseToEntity(ProductoEntity producto ) => ProductoEntity(
-        nombre: producto.nombre,
-        precioVenta: producto.precioVenta,
-        descripcion: producto.descripcion,
-        cantidad: producto.cantidad,
-        precioBase: producto.precioBase,
-        imagen: producto.imagen,
-      );
-  static ProductoEntity jsonFirestoreToEntity(
-          {required Map<String, dynamic> json}) =>
-      ProductoEntity(
-        nombre: json["Nombre"] ?? "E",
-        precioVenta: json["Precio venta"] ?? 0,
-        descripcion: json["Descripcion"] ?? "",
-        cantidad: json["Cantidad"] ?? 0,
-        precioBase: json["Precio base"] ?? 0,
-        imagen: json["Imagen"] ?? "E",
+  static ProductEntity jsonCsvToEntity({required Map<String, dynamic> json}) =>
+      ProductEntity(
+        name: json["Nombre"] ?? "No especificado",
+        salePrice: json["Precio venta"] ?? 0.0,
+        description: json["Descripcion"] ?? "Sin descripcion",
+        stock: json["Cantidad"] ?? 0.0,
+        basePrice: json["Precio base"] ?? 0.0,
+        imageUrl: json["Imagen"] ??
+            "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg",
       );
 
- static ProductoEntitys listFirestoreEntitys(
-     {required Map<String, dynamic> json})=> ProductoEntitys(
-       productoentity:   List<ProductoEntity>.from(
-            json["Producto"].map((x) => jsonFirestoreToEntity( json: x))),
+  static List<ProductEntity> jsonToListProductEntity(
+          {required Map<String, dynamic> json}) =>
+      List<ProductEntity>.from(
+        json["Producto"].map((x) => jsonCsvToEntity(json: x)),
+      );
+  static ProductEntity mapFirestoreToEntity(
+          {required Map<String, dynamic> map}) =>
+      ProductEntity(
+        name: map["name"] ?? "No especificado",
+        salePrice: map["saleprice"] ?? 0.0,
+        description: map["description"] ?? "Sin descripcion",
+        stock: map["stock"] ?? 0.0,
+        basePrice: map["baseprice"] ?? 0.0,
+        imageUrl: map["imageUrl"] ??
+            "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg",
       );
 }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gestion_inventario/features/data/api/entities/screens/prod_detail.dart';
+import 'package:gestion_inventario/features/home/domain/entities/product_entity.dart';
 import 'package:gestion_inventario/features/home/domain/entities/producto_entity.dart';
-
+// import 'package:gestion_inventario/features/data/model/product_inv.dart';
 
 Scaffold scaffWid(List<dynamic> listdat) {
   return Scaffold(
@@ -36,20 +37,20 @@ class HomePage extends StatelessWidget {
         child: DraggableScrollableSheet(
           builder: (BuildContext context, ScrollController scrollController) {
             return Container(
-              color: Color.fromARGB(255, 226, 227, 227),
+              color: const Color.fromARGB(255, 144, 197, 239),
               child: ListView.builder(
                 controller: scrollController,
                 itemCount: listdat.length,
                 itemBuilder: (BuildContext context, int index) {
-                  ProductoEntity prod = listdat[index];
-                  var text = Text(prod.nombre);
-                  var text2 = Text(prod.descripcion);
+                  ProductEntity prod = listdat[index];
+                  var text = Text(prod.name);
+                  var text2 = Text(prod.description);
                   var img = ClipRRect(
                     borderRadius: BorderRadius.circular(20), // Image border
                     child: SizedBox.fromSize(
                       // size: Size.fromRadius(48), // Image radius
                       size: const Size.square(48), // Image radius
-                      child: Image.network(prod.imagen)
+                      child: Image.network(prod.imageUrl)
                       //  ?? "",
                       //     errorBuilder: (BuildContext context,
                       //         Object exception, StackTrace? stackTrace) {
@@ -70,7 +71,7 @@ class HomePage extends StatelessWidget {
                      Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => DetailProduct(prod)));
+                                builder: (context) => DetailProduct(prod as ProductoEntity)));
 
                       },
                     ),
@@ -117,17 +118,17 @@ class Lista extends StatelessWidget {
         controller: scrollController,
         itemCount: listdat.length,
         itemBuilder: (BuildContext context, index) {
-          ProductoEntity prod = listdat[index];
+          ProductEntity prod = listdat[index];
           // print("Iter");
-          var text = Text(prod.nombre);
-          var text2 = Text(prod.descripcion);
+          var text = Text(prod.name);
+          var text2 = Text(prod.description);
           // var text3 = Text(prod.imagen.toString());
           var img = ClipRRect(
             borderRadius: BorderRadius.circular(20), // Image border
             child: SizedBox.fromSize(
               // size: Size.fromRadius(48), // Image radius
               size: const Size.square(48), // Image radius
-              child: Image.network(prod.imagen)
+              child: Image.network(prod.imageUrl)
               //  ?? "",
               //     errorBuilder: (BuildContext context,
               //         Object exception, StackTrace? stackTrace) {

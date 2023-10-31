@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_inventario/features/data/api/entities/screens/listproduct.dart';
-import 'package:gestion_inventario/features/home/presentation/providers/pruduct_providers.dart';
+import 'package:gestion_inventario/features/home/presentation/providers/products_providers/load_csv_provider.dart';
 
 class HomeView extends ConsumerStatefulWidget {
   static const route = 'H';
@@ -19,16 +19,15 @@ class HomeViewState extends ConsumerState<HomeView>
   void initState() {
     super.initState();
 
-    final urlcsv = ref.read(searchQueryProvider.notifier);
-    ref.read(searchedProductsProvider.notifier)
-    .searchProductByQuery(urlcsv.state);
+    String urlcsv = "http://bit.ly/3Sc2v46";
+    ref.read(loadCsvProvider.notifier).loadCsvByQuery(urlcsv);
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
 
-    final nowPlayingMovies = ref.watch(searchedProductsProvider);
+    final nowPlayingMovies = ref.watch(loadCsvProvider);
 
     return HomePage(
       listdat: nowPlayingMovies,

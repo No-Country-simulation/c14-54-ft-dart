@@ -1,13 +1,14 @@
+import 'package:flutter/material.dart';
 import 'dart:io';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gestion_inventario/features/auth/presentation/providers/providers.dart';
-import 'package:gestion_inventario/features/data/api/entities/screens/products.dart';
+
+import 'package:gestion_inventario/features/home/presentation/providers/providers.dart';
+import 'package:gestion_inventario/features/home/presentation/screens/screens.dart';
 import 'package:gestion_inventario/features/shared/shared.dart';
-import 'package:gestion_inventario/features/home/presentation/providers/pruduct_providers.dart';
 import 'package:go_router/go_router.dart';
 import 'welcome.dart';
 
@@ -42,89 +43,115 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
           WelcomeBackground(
             color: colors.primary,
           ),
-          SafeArea(
-            child: Center(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    _WelcomeTitle(text: 'Hola ${user!.username}'),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const _WelcomeSubTitle(
-                        text: 'Bienvenido a Gestión de inventarios de'),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    _WelcomeTitle(text: user.businessname),
-                    _ProfilePicture(path: path),
-                    CustomFilledButton(
-                      text: 'Elige foto de perfil',
-                      buttonColor: colors.background,
-                      textStyle: textStyle,
-                      onPressed: () async {
-                        await ref
-                            .read(profileImageProvider.notifier)
-                            .selectGalleryImage();
-                      },
-                    ),
-                    CustomFilledButton(
-                      text: 'Guardar',
-                      buttonColor: colors.background,
-                      textStyle: textStyle,
-                      onPressed: () async {
-                        final url = ref.read(profileImageProvider).path;
-                        await ref
-                            .read(profileImageProvider.notifier)
-                            .uploadImage(id: user.id)
-                            .whenComplete(() {
-                          if (url != '') {
-                            return customErrorMessage(
-                                context, 'Imagen guardada con exito');
-                          } else {
-                            return customErrorMessage(context, url);
-                          }
-                        });
-                      },
-                    ),
-                         CustomTextFormField(
-                      label: 'CSV',
-                      hint: 'file',
-                      keyboardType: TextInputType.text,
-                      onChanged: (value) => ref
-                          .read(searchQueryProvider.notifier).update((state) => value)
-                        ,
-                      // errorMessage: loginForm.isFormPosted
-                          // ? loginForm.email.errorMessage
-                          // : null,
-                    ),
-                    const SizedBox(
-                      height: 100,
-                    ),
-                    CustomFilledButton(
-                      text: 'DATA',
-                      buttonColor: colors.background,
-                      textStyle: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                        color: colors.primary,
+          GestureDetector(
+            onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+            child: SafeArea(
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      _WelcomeTitle(text: 'Hola ${user!.username}'),
+                      const SizedBox(
+                        height: 10,
                       ),
-                      onPressed: () {
-                        context.pushNamed(HomeView.route);
-                      },
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Saltar',
-                        style: TextStyle(
-                          color: colors.background,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
+                      const _WelcomeSubTitle(
+                          text: 'Bienvenido a Gestión de inventarios de'),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      _WelcomeTitle(text: user.businessname),
+                      _ProfilePicture(path: path),
+                      CustomFilledButton(
+                        text: 'Elige foto de perfil',
+                        buttonColor: colors.background,
+                        textStyle: textStyle,
+                        onPressed: () async {
+                          await ref
+                              .read(profileImageProvider.notifier)
+                              .selectGalleryImage();
+                        },
+                      ),
+                      CustomFilledButton(
+                        text: 'Guardar',
+                        buttonColor: colors.background,
+                        textStyle: textStyle,
+                        onPressed: () async {
+                          final url = ref.read(profileImageProvider).path;
+                          await ref
+                              .read(profileImageProvider.notifier)
+                              .uploadImage(id: user.id)
+                              .whenComplete(() {
+                            if (url != '') {
+                              return customErrorMessage(
+                                  context, 'Imagen guardada con exito');
+                            } else {
+                              return customErrorMessage(context, url);
+                            }
+                          });
+                        },
+                      ),
+                      const SizedBox(
+                        height: 100,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: CustomTextFormField(
+                          label: 'Link de descarga de archivo csv',
+                          hint: 'http://bit.ly/3Sc2v46',
+                          onChanged: (link) {
+                            return ref
+                                .read(linkCsvProvider.notifier)
+                                .update((state) => link);
+                          },
                         ),
                       ),
-                    )
-                  ],
+                      CustomFilledButton(
+                        text: 'Cargar Inventario',
+                        buttonColor: colors.background,
+                        textStyle: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: colors.primary,
+                        ),
+                        onPressed: () async {
+                          await ref
+                              .read(loadCsvProvider.notifier)
+                              .loadCsvByQuery(
+                                ref.read(linkCsvProvider),
+                              )
+                              .then((response) async {
+                            if (response.isNotEmpty) {
+                              await ref
+                                  .read(loadCsvProvider.notifier)
+                                  .upLoadProductsFirebase(response, user.id)
+                                  .then(
+                                    (value) => context.pushReplacementNamed(
+                                      HomeScreen.route,
+                                      pathParameters: {'userId': user.id},
+                                    ),
+                                  );
+                            } else {
+                              return customErrorMessage(context,
+                                  'Error en el formato no se pudo cargar el archivo');
+                            }
+                          });
+                        },
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          context.pushReplacementNamed(HomeScreen.route);
+                        },
+                        child: Text(
+                          'Saltar',
+                          style: TextStyle(
+                            color: colors.background,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
