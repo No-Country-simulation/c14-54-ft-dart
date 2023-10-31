@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gestion_inventario/features/data/api/entities/screens/prod_detail.dart';
 import 'package:gestion_inventario/features/home/domain/entities/producto_entity.dart';
-import 'package:go_router/go_router.dart';
-// import 'package:gestion_inventario/features/data/model/product_inv.dart';
+
 
 Scaffold scaffWid(List<dynamic> listdat) {
   return Scaffold(

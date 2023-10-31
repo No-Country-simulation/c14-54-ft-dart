@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:gestion_inventario/features/auth/domain/domain.dart';
-import 'package:gestion_inventario/features/data/api/entities/user_emp.dart';
+// import 'package:gestion_inventario/features/data/api/entities/user_emp.dart';
 import 'package:gestion_inventario/features/data/model/product_inv.dart';
 import 'package:logging/logging.dart';
 
@@ -52,23 +52,23 @@ class FirebaseApi {
   }
 
 //  CreateUser
-  Future<String?> createUser(UserEnt user) async {
-    try {
-      // final document =
-      // await FirebaseFirestore.instance.collection("users").add(user.toJson());
-      await FirebaseFirestore.instance
-          .collection("usuarios")
-          .doc(user.uid)
-          .set(user.toJson());
-      // Logger("${document}");
-      return user.uid;
-      // return document.
-    } on FirebaseException catch (e) {
-      Logger("FirebaseException  ${e.code}");
+  // Future<String?> createUser(UserEnt user) async {
+  //   try {
+  //     // final document =
+  //     // await FirebaseFirestore.instance.collection("users").add(user.toJson());
+  //     await FirebaseFirestore.instance
+  //         .collection("usuarios")
+  //         .doc(user.uid)
+  //         .set(user.toJson());
+  //     // Logger("${document}");
+  //     return user.uid;
+  //     // return document.
+  //   } on FirebaseException catch (e) {
+  //     Logger("FirebaseException  ${e.code}");
 
-      return e.code;
-    }
-  }
+  //     return e.code;
+  //   }
+  // }
 
   Future<Map<String, dynamic>> getUser(String uid) async {
     try {
