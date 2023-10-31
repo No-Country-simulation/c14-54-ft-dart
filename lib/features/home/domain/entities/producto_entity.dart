@@ -15,10 +15,10 @@ class ProductoEntitys {
 
 class ProductoEntity {
   String nombre;
-  int precioVenta;
+  double precioVenta;
   String descripcion;
   int cantidad;
-  int precioBase;
+  double precioBase;
   String imagen;
 
   ProductoEntity({
@@ -32,10 +32,10 @@ class ProductoEntity {
 
   ProductoEntity copyWith({
     String? nombre,
-    int? precioVenta,
+    double? precioVenta,
     String? descripcion,
     int? cantidad,
-    int? precioBase,
+    double? precioBase,
     String? imagen,
   }) =>
       ProductoEntity(
@@ -46,4 +46,6 @@ class ProductoEntity {
         precioBase: precioBase ?? this.precioBase,
         imagen: imagen ?? this.imagen,
       );
+
+  
 }

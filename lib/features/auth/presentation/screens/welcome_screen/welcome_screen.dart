@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gestion_inventario/features/auth/presentation/providers/providers.dart';
-import 'package:gestion_inventario/features/data/api/entities/screens/products_scrrens.dart';
+import 'package:gestion_inventario/features/data/api/entities/screens/products.dart';
 import 'package:gestion_inventario/features/shared/shared.dart';
+import 'package:gestion_inventario/features/home/presentation/providers/pruduct_providers.dart';
 import 'package:go_router/go_router.dart';
 import 'welcome.dart';
 
@@ -85,6 +86,17 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                           }
                         });
                       },
+                    ),
+                         CustomTextFormField(
+                      label: 'CSV',
+                      hint: 'file',
+                      keyboardType: TextInputType.text,
+                      onChanged: (value) => ref
+                          .read(searchQueryProvider.notifier).update((state) => value)
+                        ,
+                      // errorMessage: loginForm.isFormPosted
+                          // ? loginForm.email.errorMessage
+                          // : null,
                     ),
                     const SizedBox(
                       height: 100,

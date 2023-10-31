@@ -19,15 +19,16 @@ class HomeViewState extends ConsumerState<HomeView>
   void initState() {
     super.initState();
 
-    String urlcsv = "http://bit.ly/3Sc2v46";
-    ref.read(searchedMoviesProvider.notifier).searchMoviesByQuery(urlcsv);
+    final urlcsv = ref.read(searchQueryProvider.notifier);
+    ref.read(searchedProductsProvider.notifier)
+    .searchProductByQuery(urlcsv.state);
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
 
-    final nowPlayingMovies = ref.watch(searchedMoviesProvider);
+    final nowPlayingMovies = ref.watch(searchedProductsProvider);
 
     return HomePage(
       listdat: nowPlayingMovies,

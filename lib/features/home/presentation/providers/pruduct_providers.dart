@@ -3,33 +3,34 @@ import 'package:gestion_inventario/features/home/domain/entities/producto_entity
 import 'package:gestion_inventario/features/home/presentation/providers/product_repository_provider.dart';
 
 final searchQueryProvider = StateProvider<String>((ref) => '');
-
-final searchedMoviesProvider =
-    StateNotifierProvider<SearchedMoviesNotifier, List<ProductoEntity>>((ref) {
-  final movieRepository = ref.read(productRepositoryProvider);
-
-  return SearchedMoviesNotifier(
-      searchMovies: movieRepository.getProducts, ref: ref);
+final searchedProductsProvider =
+    StateNotifierProvider<SearchedProductsNotifier, List<ProductoEntity>>((ref) {
+  final productRepository = ref.read(productRepositoryProvider);
+  return SearchedProductsNotifier(
+      searchProducts: productRepository.getProducts, ref: ref);
 });
 
-typedef SearchMoviesCallback = Future<List<ProductoEntity>> Function(
-    String query);
-// typedef GetMovieCallback = Future<Movie> Function(String movieId);
 
-class SearchedMoviesNotifier extends StateNotifier<List<ProductoEntity>> {
-  final SearchMoviesCallback searchMovies;
+typedef SearchProductsCallback = Future<List<ProductoEntity>> Function(
+    String query);
+
+
+class SearchedProductsNotifier extends StateNotifier<List<ProductoEntity>> {
+  final SearchProductsCallback searchProducts;
   final Ref ref;
 
-  SearchedMoviesNotifier({
-    required this.searchMovies,
+  SearchedProductsNotifier({
+    required this.searchProducts,
     required this.ref,
   }) : super([]);
 
-  Future<List<ProductoEntity>> searchMoviesByQuery(String query) async {
-    final List<ProductoEntity> movies = await searchMovies(query);
+  Future<List<ProductoEntity>> searchProductByQuery(String query) async {
+    final List<ProductoEntity> movies = await searchProducts(query);
     ref.read(searchQueryProvider.notifier).update((state) => query);
 
     state = movies;
     return movies;
   }
+
+
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gestion_inventario/features/data/api/entities/screens/prod_detail.dart';
 import 'package:gestion_inventario/features/home/domain/entities/producto_entity.dart';
+import 'package:go_router/go_router.dart';
 // import 'package:gestion_inventario/features/data/model/product_inv.dart';
 
 Scaffold scaffWid(List<dynamic> listdat) {
@@ -29,13 +31,13 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('DraggableScrollableSheet'),
+        title: const Text('Productos'),
       ),
       body: SizedBox.expand(
         child: DraggableScrollableSheet(
           builder: (BuildContext context, ScrollController scrollController) {
             return Container(
-              color: Color.fromARGB(255, 144, 197, 239),
+              color: Color.fromARGB(255, 226, 227, 227),
               child: ListView.builder(
                 controller: scrollController,
                 itemCount: listdat.length,
@@ -58,19 +60,38 @@ class HomePage extends StatelessWidget {
                       ,
                     ),
                   );
-                  return ListTile(
-                    title: text,
-                    subtitle: text2,
-                    leading: img,
+                  return Card(
+                    child: ListTile(
+                      title: text,
+                      subtitle: text2,
+                      leading: img,
+                      onTap: () {
+                        // print("tab");
+                        // (context) => DetailPlace(prod);
+                     Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DetailProduct(prod)));
+
+                      },
+                    ),
                   );
+                  // return ListTile(
+                  //   title: text,
+                  //   subtitle: text2,
+                  //   leading: img,
+                  //   onTap: () {
+
+                  //   },
+                  // );
                   //             return Card(
                   //   child: ListTile(
                   //     title: text,
                   //     subtitle: text2,
                   //     leading: img,
-                  //     // onTap: () {
-                  //     //   // builder: (context) => print("screen new");
-                  //     // },
+                  // onTap: () {
+                  //   builder: (context) => print("screen new");
+                  // },
                   //   ),
                   // );
                 },

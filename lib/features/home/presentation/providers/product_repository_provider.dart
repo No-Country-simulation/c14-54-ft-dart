@@ -6,3 +6,5 @@ import 'package:gestion_inventario/features/home/infrastructure/repositories/hom
 final productRepositoryProvider = Provider((ref) {
   return HomeRepositoryImpl(HomeDatasourceFirebase());
 });
+
+
