@@ -18,20 +18,10 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    PageController pageController = PageController();
-
     return Scaffold(
-      body: PageView.builder(
-        controller: pageController,
-        physics: const NeverScrollableScrollPhysics(),
-        onPageChanged: (view) {
-          ref.read(homeViewProvider.notifier).update((state) => view);
-        },
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          return views[ref.watch(homeViewProvider)];
-        },
-        itemCount: views.length,
+      body: IndexedStack(
+        index: ref.watch(homeViewProvider),
+        children: views,
       ),
       bottomNavigationBar: CustomBottomNavigatorBar(
         currentIndex: ref.watch(homeViewProvider),
