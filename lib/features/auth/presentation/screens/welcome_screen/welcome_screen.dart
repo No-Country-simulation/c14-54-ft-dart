@@ -125,7 +125,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                                   .read(loadCsvProvider.notifier)
                                   .upLoadProductsFirebase(response, user.id)
                                   .then(
-                                    (value) => context.pushReplacementNamed(
+                                    (_) => context.pushReplacementNamed(
                                       HomeScreen.route,
                                       pathParameters: {'userId': user.id},
                                     ),
@@ -139,7 +139,10 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-                          context.pushReplacementNamed(HomeScreen.route);
+                          context.pushReplacementNamed(
+                            HomeScreen.route,
+                            pathParameters: {'userId': user.id},
+                          );
                         },
                         child: Text(
                           'Saltar',

@@ -30,31 +30,30 @@ class _ProductImage extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     final Size size = MediaQuery.of(context).size;
-    return ClipRRect(
-      child: Card(
-        child: Container(
-          height: 200,
-          width: size.width * 0.4,
-          margin: const EdgeInsets.symmetric(
-            vertical: 10,
-            horizontal: 30,
-          ),
-          child: CachedNetworkImage(
-            imageUrl: product.imageUrl,
-            imageBuilder: (context, imageProvider) => Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: imageProvider,
-                  fit: BoxFit.cover,
-                  alignment: Alignment.center,
-                ),
+    return Container(
+      margin: const EdgeInsets.symmetric(
+        vertical: 10,
+        horizontal: 30,
+      ),
+      height: 200,
+      width: size.width * 0.4,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: CachedNetworkImage(
+          imageUrl: product.imageUrl,
+          imageBuilder: (context, imageProvider) => Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: imageProvider,
+                fit: BoxFit.cover,
+                alignment: Alignment.center,
               ),
             ),
-            placeholder: (context, url) => CircularProgressIndicator(
-              color: colors.secondary,
-            ),
-            errorWidget: (context, url, error) => const Icon(Icons.error),
           ),
+          placeholder: (context, url) => CircularProgressIndicator(
+            color: colors.secondary,
+          ),
+          errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
       ),
     );
@@ -73,6 +72,7 @@ class _ProductDescription extends StatelessWidget {
         height: 200,
         width: size.width * 0.4,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               product.name,
