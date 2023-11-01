@@ -33,6 +33,9 @@ class ProductMapper {
     if (salePrice > 0) {
       return salePrice;
     }
+    if (salePrice < basePrice) {
+      return basePrice / (1 - 0.3);
+    }
     return basePrice / (1 - 0.3);
   }
 }
