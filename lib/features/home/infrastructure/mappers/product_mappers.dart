@@ -4,7 +4,8 @@ class ProductMapper {
   static ProductEntity jsonCsvToEntity({required Map<String, dynamic> json}) =>
       ProductEntity(
         name: json["Nombre"] ?? "No especificado",
-        salePrice: json["Precio venta"] ?? 0.0,
+        salePrice: setSalePrice(num.tryParse(json["Precio base"]) ?? 0,
+            num.tryParse(json["Precio venta"]) ?? 0),
         description: json["Descripcion"] ?? "Sin descripcion",
         stock: json["Cantidad"] ?? 0.0,
         basePrice: json["Precio base"] ?? 0.0,
@@ -28,4 +29,10 @@ class ProductMapper {
         imageUrl: map["imageUrl"] ??
             "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg",
       );
+  static num setSalePrice(num basePrice, num salePrice) {
+    if (salePrice > 0) {
+      return salePrice;
+    }
+    return basePrice / (1 - 0.3);
+  }
 }
