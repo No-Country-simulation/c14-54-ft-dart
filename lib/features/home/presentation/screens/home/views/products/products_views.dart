@@ -12,8 +12,10 @@ class View2 extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: ListView.builder(
-          itemBuilder: (context, index) => ProductRow(
-            product: products[index],
+          itemBuilder: (context, index) => GestureDetector(
+            child: ProductRow(
+              product: products[index],
+            ),
           ),
           itemCount: products.length,
         ),
