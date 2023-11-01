@@ -1,9 +1,9 @@
 class ProductEntity {
   String name;
-  double salePrice;
+  num salePrice;
   String description;
-  double stock;
-  double basePrice;
+  num stock;
+  num basePrice;
   String imageUrl;
 
   ProductEntity({
