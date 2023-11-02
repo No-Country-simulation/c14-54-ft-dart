@@ -26,4 +26,16 @@ class HomeRepositoryImpl extends HomeRepository {
       {required ProductEntity product, required String userId}) {
     return homeDataSource.updateProduct(product: product, userId: userId);
   }
+
+  @override
+  Future<ProductEntity> loadProductbyId(
+      {required String id, required String userId}) {
+    return homeDataSource.loadProductbyId(id: id, userId: userId);
+  }
+
+  @override
+  Future<String> addProduct(
+      {required ProductEntity product, required String userId}) {
+    return homeDataSource.addProduct(product: product, userId: userId);
+  }
 }

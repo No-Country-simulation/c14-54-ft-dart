@@ -52,6 +52,20 @@ class HomeDatasourceCsv extends HomeDataSource {
     // TODO: implement updateProduct
     throw UnimplementedError();
   }
+
+  @override
+  Future<ProductEntity> loadProductbyId(
+      {required String id, required String userId}) {
+    // TODO: implement loadProductbyId
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<String> addProduct(
+      {required ProductEntity product, required String userId}) {
+    // TODO: implement addProduct
+    throw UnimplementedError();
+  }
 }
 
 Map<String, dynamic> itemJson(valueList, List<String> claveList) {

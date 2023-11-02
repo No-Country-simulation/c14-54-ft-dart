@@ -13,7 +13,7 @@ class ProductMapper {
         stock: num.tryParse(json["Cantidad"].toString()) ?? 0.0,
         basePrice: num.tryParse(json["Precio base"].toString()) ?? 0.0,
         imageUrl: json["Imagen"] ??
-            "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg",
+            "https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ=",
       );
 
   static List<ProductEntity> jsonToListProductEntity(
@@ -31,7 +31,7 @@ class ProductMapper {
         stock: map["stock"] ?? 0.0,
         basePrice: map["baseprice"] ?? 0.0,
         imageUrl: map["imageUrl"] ??
-            "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg",
+            "https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ=",
       );
   static num setSalePrice(num basePrice, num salePrice) {
     if (salePrice > 0) {

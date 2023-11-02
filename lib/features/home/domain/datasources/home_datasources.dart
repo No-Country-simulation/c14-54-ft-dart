@@ -14,4 +14,12 @@ abstract class HomeDataSource {
     required ProductEntity product,
     required String userId,
   });
+  Future<String> addProduct({
+    required ProductEntity product,
+    required String userId,
+  });
+  Future<ProductEntity> loadProductbyId({
+    required String id,
+    required String userId,
+  });
 }

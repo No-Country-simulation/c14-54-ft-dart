@@ -8,9 +8,16 @@ class CustomLoading extends StatelessWidget {
     final colors = Theme.of(context).colorScheme;
     return Scaffold(
       body: Center(
-        child: CircularProgressIndicator(
-          color: colors.secondary,
-          strokeWidth: 2,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircularProgressIndicator(
+              strokeWidth: 1,
+              color: colors.primary,
+              backgroundColor: colors.secondary,
+            ),
+            const Text('Cargando...'),
+          ],
         ),
       ),
     );

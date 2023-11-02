@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_inventario/features/home/domain/domain.dart';
 import 'package:gestion_inventario/features/home/presentation/providers/providers.dart';
+import 'package:gestion_inventario/features/home/presentation/screens/screens.dart';
+import 'package:go_router/go_router.dart';
 
 class ProductsView extends ConsumerWidget {
   const ProductsView({
@@ -17,12 +19,26 @@ class ProductsView extends ConsumerWidget {
       body: Center(
         child: ListView.builder(
           itemBuilder: (context, index) => GestureDetector(
+            onTap: () => context.pushNamed(
+              ProductScreen.route,
+              pathParameters: {'productId': products[index].id},
+            ),
             child: ProductRow(
               product: products[index],
             ),
           ),
           itemCount: products.length,
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        heroTag: 'add_product',
+        onPressed: () {
+          context.pushNamed(
+            ProductScreen.route,
+            pathParameters: {'productId': 'new'},
+          );
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -45,21 +61,24 @@ class _ProductImage extends StatelessWidget {
       width: size.width * 0.4,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
-        child: CachedNetworkImage(
-          imageUrl: product.imageUrl,
-          imageBuilder: (context, imageProvider) => Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: imageProvider,
-                fit: BoxFit.cover,
-                alignment: Alignment.center,
+        child: Hero(
+          tag: product.id,
+          child: CachedNetworkImage(
+            imageUrl: product.imageUrl,
+            imageBuilder: (context, imageProvider) => Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: imageProvider,
+                  fit: BoxFit.cover,
+                  alignment: Alignment.center,
+                ),
               ),
             ),
+            placeholder: (context, url) => CircularProgressIndicator(
+              color: colors.secondary,
+            ),
+            errorWidget: (context, url, error) => const Icon(Icons.error),
           ),
-          placeholder: (context, url) => CircularProgressIndicator(
-            color: colors.secondary,
-          ),
-          errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
       ),
     );
@@ -90,7 +109,7 @@ class _ProductDescription extends StatelessWidget {
                   const Shadow(
                     color: Colors.black26,
                     offset: Offset(2, 4),
-                    blurRadius: 6,
+                    blurRadius: 9,
                   ),
                 ],
                 fontFamily: 'Roboto',

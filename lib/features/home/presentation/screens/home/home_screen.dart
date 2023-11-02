@@ -25,6 +25,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(

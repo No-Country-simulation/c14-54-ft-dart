@@ -1,55 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_inventario/features/auth/presentation/providers/providers.dart';
-import 'package:gestion_inventario/features/home/domain/entities/product_entity.dart';
+import 'package:gestion_inventario/features/home/domain/domain.dart';
 import 'package:gestion_inventario/features/home/presentation/providers/providers.dart';
-import 'package:gestion_inventario/features/home/presentation/screens/screens.dart';
 import 'package:gestion_inventario/features/shared/shared.dart';
 
-class ProductScreen extends ConsumerStatefulWidget {
-  final String productId;
-  static const route = 'productId';
-  const ProductScreen({super.key, required this.productId});
-
-  @override
-  ConsumerState<ProductScreen> createState() => _ProductScreenState();
-}
-
-class _ProductScreenState extends ConsumerState<ProductScreen> {
-  @override
-  void initState() {
-    super.initState();
-    if (widget.productId != 'new') {
-      ref.read(productFirebaseProvider.notifier).loadProductbyIdFirebase(
-          id: widget.productId, userId: ref.read(authProvider).user!.id);
-    }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final product = ref.watch(productFirebaseProvider).product;
-
-    if (product.id.isEmpty) {
-      return const CustomLoading();
-    }
-    if (product.id == 'new') {
-      return EmptyScreen(
-        product: product,
-      );
-    }
-    return EditingScreen(
-      product: product,
-    );
-  }
-}
-
-class EditingScreen extends ConsumerWidget {
-  const EditingScreen({
+class EmptyScreen extends ConsumerWidget {
+  const EmptyScreen({
     super.key,
     required this.product,
   });
@@ -75,6 +32,9 @@ class EditingScreen extends ConsumerWidget {
         floatingActionButton: FloatingActionButton(
           heroTag: 'save',
           onPressed: () async {
+            await ref.read(productFirebaseProvider.notifier).createProduct(
+                  ref.read(authProvider).user!.id,
+                );
             await ref
                 .read(productFirebaseProvider.notifier)
                 .onFormSubmit(ref.read(authProvider).user!.id)
@@ -112,7 +72,9 @@ class _ProductImage extends StatelessWidget {
             child: Hero(
               tag: product.id,
               child: Image.network(
-                product.imageUrl,
+                product.imageUrl == ''
+                    ? 'https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ='
+                    : product.imageUrl,
                 fit: BoxFit.cover,
               ),
             ),

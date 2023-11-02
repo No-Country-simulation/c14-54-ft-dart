@@ -10,8 +10,10 @@ class CustomTextFormField extends StatelessWidget {
   final String? Function(String?)? validator;
   final Function(String)? onFieldSubmitted;
   final Widget? subfixIcon;
+  final double? height;
 
   const CustomTextFormField({
+    this.height,
     super.key,
     this.label,
     this.onFieldSubmitted,
@@ -55,7 +57,7 @@ class CustomTextFormField extends StatelessWidget {
           keyboardType: keyboardType,
           decoration: InputDecoration(
             contentPadding:
-                const EdgeInsets.only(top: 25, left: 15, bottom: 10),
+                EdgeInsets.only(top: 25, left: 15, bottom: height ?? 10),
             // constraints: const BoxConstraints(maxHeight: 70),
 
             errorMaxLines: 2,

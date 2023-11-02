@@ -4,3 +4,4 @@ export 'package:gestion_inventario/features/home/presentation/providers/products
 export 'package:gestion_inventario/features/home/presentation/providers/products_providers/link_csv_repository_provider.dart';
 export 'package:gestion_inventario/features/home/presentation/providers/products_providers/link_csv_provider.dart';
 export 'package:gestion_inventario/features/home/presentation/providers/products_providers/products_firebase_provider.dart';
+export 'package:gestion_inventario/features/home/presentation/providers/products_providers/product_firebase_provider.dart';

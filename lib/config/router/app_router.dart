@@ -42,7 +42,7 @@ final appRouter = GoRouter(
                   routes: [
                     GoRoute(
                       name: ProductScreen.route,
-                      path: ':/productId',
+                      path: ':productId',
                       builder: (context, state) {
                         final String productId =
                             state.pathParameters['productId'] ?? '';
