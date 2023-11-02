@@ -33,9 +33,11 @@ class ProductsView extends ConsumerWidget {
       floatingActionButton: FloatingActionButton(
         heroTag: 'add_product',
         onPressed: () {
-          context.pushNamed(
-            ProductScreen.route,
-            pathParameters: {'productId': 'new'},
+          ref.read(productFirebaseProvider.notifier).onAddProduct('');
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const EmptyScreen(),
+            ),
           );
         },
         child: const Icon(Icons.add),
@@ -63,22 +65,26 @@ class _ProductImage extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         child: Hero(
           tag: product.id,
-          child: CachedNetworkImage(
-            imageUrl: product.imageUrl,
-            imageBuilder: (context, imageProvider) => Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: imageProvider,
-                  fit: BoxFit.cover,
-                  alignment: Alignment.center,
+          child: product.imageUrl == ''
+              ? Image.asset(
+                  'assets/images/products/no-image.png',
+                )
+              : CachedNetworkImage(
+                  imageUrl: product.imageUrl,
+                  imageBuilder: (context, imageProvider) => Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
+                        alignment: Alignment.center,
+                      ),
+                    ),
+                  ),
+                  placeholder: (context, url) => CircularProgressIndicator(
+                    color: colors.secondary,
+                  ),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
-              ),
-            ),
-            placeholder: (context, url) => CircularProgressIndicator(
-              color: colors.secondary,
-            ),
-            errorWidget: (context, url, error) => const Icon(Icons.error),
-          ),
         ),
       ),
     );

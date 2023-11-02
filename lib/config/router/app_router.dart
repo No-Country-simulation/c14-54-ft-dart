@@ -34,24 +34,32 @@ final appRouter = GoRouter(
             },
             routes: [
               GoRoute(
-                  name: ProductsView.route,
-                  path: 'products',
-                  builder: (context, state) {
-                    return const ProductsView();
-                  },
-                  routes: [
-                    GoRoute(
-                      name: ProductScreen.route,
-                      path: ':productId',
-                      builder: (context, state) {
-                        final String productId =
-                            state.pathParameters['productId'] ?? '';
-                        return ProductScreen(
-                          productId: productId,
-                        );
-                      },
-                    ),
-                  ]),
+                name: ProductsView.route,
+                path: 'products',
+                builder: (context, state) {
+                  return const ProductsView();
+                },
+                routes: [
+                  GoRoute(
+                    name: ProductScreen.route,
+                    path: ':productId',
+                    builder: (context, state) {
+                      final String productId =
+                          state.pathParameters['productId'] ?? '';
+                      return ProductScreen(
+                        productId: productId,
+                      );
+                    },
+                  ),
+                  // GoRoute(
+                  //   name: EmptyScreen.route,
+                  //   path: 'empty',
+                  //   builder: (context, state) {
+                  //     return const EmptyScreen();
+                  //   },
+                  // ),
+                ],
+              ),
             ]),
       ],
     ),

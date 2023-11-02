@@ -5,16 +5,26 @@ import 'package:gestion_inventario/features/home/domain/domain.dart';
 import 'package:gestion_inventario/features/home/presentation/providers/providers.dart';
 import 'package:gestion_inventario/features/shared/shared.dart';
 
-class EmptyScreen extends ConsumerWidget {
+class EmptyScreen extends ConsumerStatefulWidget {
+  static const route = 'empty';
+
   const EmptyScreen({
     super.key,
-    required this.product,
   });
+  @override
+  @override
+  ConsumerState<EmptyScreen> createState() => _EmptyScreenState();
+}
 
-  final ProductEntity product;
+class _EmptyScreenState extends ConsumerState<EmptyScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
+    final product = ref.watch(productFirebaseProvider).product;
     return Scaffold(
         appBar: AppBar(),
         body: SingleChildScrollView(
@@ -32,22 +42,18 @@ class EmptyScreen extends ConsumerWidget {
         floatingActionButton: FloatingActionButton(
           heroTag: 'save',
           onPressed: () async {
-            await ref.read(productFirebaseProvider.notifier).createProduct(
-                  ref.read(authProvider).user!.id,
-                );
+            final userId = ref.read(authProvider).user!.id;
+
             await ref
                 .read(productFirebaseProvider.notifier)
-                .onFormSubmit(ref.read(authProvider).user!.id)
-                .then((value) {
-              ref
-                  .read(productFirebaseProvider.notifier)
-                  .loadProductbyIdFirebase(
-                      id: product.id, userId: ref.read(authProvider).user!.id);
-              ref
-                  .read(productsFirebaseProvider.notifier)
-                  .loadProductsFirebase(ref.read(authProvider).user!.id);
-              return customErrorMessage(context, value);
-            });
+                .createProduct(userId)
+                .then(
+                  (response) => customErrorMessage(context, response),
+                );
+
+            await ref
+                .read(productsFirebaseProvider.notifier)
+                .loadProductsFirebase(ref.read(authProvider).user!.id);
           },
           child: const Icon(Icons.save),
         ));
@@ -70,14 +76,10 @@ class _ProductImage extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: Hero(
-              tag: product.id,
-              child: Image.network(
-                product.imageUrl == ''
-                    ? 'https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ='
-                    : product.imageUrl,
-                fit: BoxFit.cover,
-              ),
-            ),
+                tag: product.id,
+                child: Image.asset(
+                  'assets/images/products/no-image.png',
+                )),
           ),
         ),
         Positioned(

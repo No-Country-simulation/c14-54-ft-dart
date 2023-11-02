@@ -14,7 +14,7 @@ class ProductFirebaseNotifier extends StateNotifier<ProductFirebaseState> {
     required this.homeRepository,
   }) : super(ProductFirebaseState(
           product: ProductEntity(
-            id: 'new',
+            id: '',
             name: '',
             description: '',
             stock: 0,
@@ -67,6 +67,29 @@ class ProductFirebaseNotifier extends StateNotifier<ProductFirebaseState> {
       stock: state.stock,
       imageUrl: state.imageUrl,
     );
+  }
+
+  ProductEntity onAddProduct(String id) {
+    state = state.copyWith(
+      name: '',
+      salePrice: 0,
+      basePrice: 0,
+      description: '',
+      stock: 0,
+      imageUrl: '',
+      id: id,
+    );
+    state = state.copyWith(
+        product: ProductEntity(
+      id: state.id,
+      name: state.name,
+      salePrice: state.salePrice,
+      description: state.description,
+      stock: state.stock,
+      basePrice: state.basePrice,
+      imageUrl: state.imageUrl,
+    ));
+    return state.product;
   }
 
   void onChangedStock(num stock) {
@@ -130,6 +153,16 @@ class ProductFirebaseNotifier extends StateNotifier<ProductFirebaseState> {
   }
 
   Future<String> createProduct(String userId) async {
+    state = state.copyWith(
+        product: ProductEntity(
+      id: state.id,
+      name: state.name,
+      salePrice: state.salePrice,
+      description: state.description,
+      stock: state.stock,
+      basePrice: state.basePrice,
+      imageUrl: state.imageUrl,
+    ));
     final String result =
         await homeRepository.addProduct(product: state.product, userId: userId);
     return result;
