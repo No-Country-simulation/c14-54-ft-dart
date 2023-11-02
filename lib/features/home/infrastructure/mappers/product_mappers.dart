@@ -3,6 +3,7 @@ import 'package:gestion_inventario/features/home/domain/domain.dart';
 class ProductMapper {
   static ProductEntity jsonCsvToEntity({required Map<String, dynamic> json}) =>
       ProductEntity(
+        id: '',
         name: json["Nombre"] ?? "No especificado",
         salePrice: setSalePrice(
           num.tryParse(json["Precio base"].toString()) ?? 0.0,
@@ -21,8 +22,9 @@ class ProductMapper {
         json["Producto"].map((x) => jsonCsvToEntity(json: x)),
       );
   static ProductEntity mapFirestoreToEntity(
-          {required Map<String, dynamic> map}) =>
+          {required Map<String, dynamic> map, required id}) =>
       ProductEntity(
+        id: id,
         name: map["name"] ?? "No especificado",
         salePrice: map["saleprice"] ?? 0.0,
         description: map["description"] ?? "Sin descripcion",

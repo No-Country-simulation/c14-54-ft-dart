@@ -1,29 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:gestion_inventario/features/home/domain/domain.dart';
 
 class ProductScreen extends StatelessWidget {
-  final ProductEntity product;
-  static const route = 'product';
-  const ProductScreen({super.key, required this.product});
+  final String productId;
+  static const route = 'productId';
+  const ProductScreen({super.key, required this.productId});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
         body: Column(
       children: [
-        AspectRatio(
-          aspectRatio: 16 / 9,
-          child: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(product.imageUrl),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-        ),
-        Text(product.name),
-        Text(product.description),
+        // AspectRatio(
+        //   aspectRatio: 16 / 9,
+        //   child: Container(
+        //     decoration: BoxDecoration(
+        //       image: DecorationImage(
+        //         image: NetworkImage(productId.imageUrl),
+        //         fit: BoxFit.cover,
+        //       ),
+        //     ),
+        //   ),
+        // ),
+        // Text(productId.name),
+        // Text(productId.description),
       ],
     ));
   }

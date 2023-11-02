@@ -14,4 +14,16 @@ class HomeRepositoryImpl extends HomeRepository {
       {required List<ProductEntity> products, required String userId}) {
     return homeDataSource.upLoadProducts(products: products, userId: userId);
   }
+
+  @override
+  Future<String> deleteProduct(
+      {required ProductEntity product, required String userId}) {
+    return homeDataSource.deleteProduct(product: product, userId: userId);
+  }
+
+  @override
+  Future<String> updateProduct(
+      {required ProductEntity product, required String userId}) {
+    return homeDataSource.updateProduct(product: product, userId: userId);
+  }
 }

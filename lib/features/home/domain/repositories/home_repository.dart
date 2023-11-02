@@ -8,4 +8,12 @@ abstract class HomeRepository {
     required List<ProductEntity> products,
     required String userId,
   });
+  Future<String> updateProduct({
+    required ProductEntity product,
+    required String userId,
+  });
+  Future<String> deleteProduct({
+    required ProductEntity product,
+    required String userId,
+  });
 }

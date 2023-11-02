@@ -1,14 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_inventario/features/home/domain/domain.dart';
+import 'package:gestion_inventario/features/home/presentation/providers/providers.dart';
 
-class View2 extends StatelessWidget {
-  final List products;
-  const View2({super.key, required this.products});
+class ProductsView extends ConsumerWidget {
+  const ProductsView({
+    super.key,
+  });
   static const route = 'view_2';
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final products = ref.watch(productsFirebaseProvider);
     return Scaffold(
       body: Center(
         child: ListView.builder(
@@ -75,21 +79,40 @@ class _ProductDescription extends StatelessWidget {
         width: size.width * 0.4,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               product.name,
-              style: textStyle.titleLarge,
+              style: textStyle.titleLarge?.copyWith(
+                overflow: TextOverflow.ellipsis,
+                fontWeight: FontWeight.w500,
+                shadows: [
+                  const Shadow(
+                    color: Colors.black26,
+                    offset: Offset(2, 4),
+                    blurRadius: 6,
+                  ),
+                ],
+                fontFamily: 'Roboto',
+              ),
             ),
             Text(
               product.description,
+              style: textStyle.titleMedium?.copyWith(shadows: [
+                const Shadow(
+                  color: Colors.black26,
+                  offset: Offset(2, 4),
+                  blurRadius: 7,
+                ),
+              ]),
+              overflow: TextOverflow.ellipsis,
+            ),
+            Text(
+              'Precio: ${product.salePrice.toStringAsFixed(2)}',
               style: textStyle.titleMedium,
             ),
             Text(
-              product.salePrice.toStringAsFixed(2),
-              style: textStyle.titleMedium,
-            ),
-            Text(
-              product.stock.toString(),
+              'Stock: ${product.stock}',
               style: textStyle.titleMedium,
             ),
           ],

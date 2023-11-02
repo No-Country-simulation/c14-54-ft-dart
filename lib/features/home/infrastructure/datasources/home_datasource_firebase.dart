@@ -13,8 +13,9 @@ class HomeDatasourceFirebase extends HomeDataSource {
           await db.collection('users').doc(userId).collection('products').get();
       List<ProductEntity> products = [];
       for (var product in response.docs) {
+        final String id = product.id;
         ProductEntity producto =
-            ProductMapper.mapFirestoreToEntity(map: product.data());
+            ProductMapper.mapFirestoreToEntity(map: product.data(), id: id);
 
         products.add(producto);
       }
@@ -42,6 +43,45 @@ class HomeDatasourceFirebase extends HomeDataSource {
       }
 
       return Future.value('Carga exitosa');
+    } on FirebaseException catch (e) {
+      return Future.value(e.toString());
+    }
+  }
+
+  @override
+  Future<String> deleteProduct(
+      {required ProductEntity product, required String userId}) {
+    try {
+      db
+          .collection('users')
+          .doc(userId)
+          .collection('products')
+          .doc(product.id)
+          .delete();
+      return Future.value('Producto eliminado');
+    } on FirebaseException catch (e) {
+      return Future.value(e.toString());
+    }
+  }
+
+  @override
+  Future<String> updateProduct(
+      {required ProductEntity product, required String userId}) {
+    try {
+      db
+          .collection('users')
+          .doc(userId)
+          .collection('products')
+          .doc(product.id)
+          .update({
+        'name': product.name,
+        'description': product.description,
+        'baseprice': product.basePrice,
+        'saleprice': product.salePrice,
+        'stock': product.stock,
+        'imageUrl': product.imageUrl,
+      });
+      return Future.value('Producto actualizado');
     } on FirebaseException catch (e) {
       return Future.value(e.toString());
     }
