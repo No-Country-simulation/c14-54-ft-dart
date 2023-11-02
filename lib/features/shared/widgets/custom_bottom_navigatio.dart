@@ -36,12 +36,12 @@ class CustomBottomNavigatorBar extends ConsumerWidget {
 
           /// Likes
           DotNavigationBarItem(
-            icon: const Icon(Icons.inventory_outlined),
+            icon: const Icon(Icons.calculate_outlined),
           ),
 
           /// Search
           DotNavigationBarItem(
-            icon: const Icon(FontAwesomeIcons.book),
+            icon: const Icon(Icons.inventory_outlined),
           ),
 
           /// Profile

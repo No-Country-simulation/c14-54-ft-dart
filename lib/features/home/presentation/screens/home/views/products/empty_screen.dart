@@ -86,7 +86,7 @@ class _ProductImage extends StatelessWidget {
           right: 10,
           child: FloatingActionButton(
             heroTag: 'camera',
-            onPressed: () {},
+            onPressed: () async {},
             child: const Icon(
               Icons.camera_alt_outlined,
             ),
