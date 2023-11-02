@@ -14,7 +14,7 @@ class AppTheme {
         useMaterial3: true,
         brightness: isDarkMode ? Brightness.dark : Brightness.light,
         colorSchemeSeed: colorSeed,
-        textTheme: GoogleFonts.montserratTextTheme(),
+        textTheme: GoogleFonts.robotoTextTheme(),
       );
   AppTheme copyWith({bool? isDarkMode, Color? colorSeed}) => AppTheme(
         isDarkMode: isDarkMode ?? this.isDarkMode,

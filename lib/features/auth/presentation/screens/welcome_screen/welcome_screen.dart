@@ -127,7 +127,6 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                                   .then(
                                     (_) => context.pushReplacementNamed(
                                       HomeScreen.route,
-                                      pathParameters: {'userId': user.id},
                                     ),
                                   );
                             } else {
@@ -141,7 +140,6 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                         onPressed: () {
                           context.pushReplacementNamed(
                             HomeScreen.route,
-                            pathParameters: {'userId': user.id},
                           );
                         },
                         child: Text(

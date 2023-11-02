@@ -6,7 +6,9 @@ final productsFirebaseProvider =
     StateNotifierProvider<ProductsFirebaseNotifier, List<ProductEntity>>((ref) {
   final productRepository = ref.read(productRepositoryProvider);
 
-  return ProductsFirebaseNotifier(loadProducts: productRepository.getProducts);
+  return ProductsFirebaseNotifier(
+      loadProducts: productRepository.getProducts,
+      homeRepository: productRepository);
 });
 
 typedef LoadProductsCallback = Future<List<ProductEntity>> Function(String url);
@@ -14,8 +16,10 @@ typedef LoadProductsCallback = Future<List<ProductEntity>> Function(String url);
 
 class ProductsFirebaseNotifier extends StateNotifier<List<ProductEntity>> {
   final LoadProductsCallback loadProducts;
+  final HomeRepository homeRepository;
 
   ProductsFirebaseNotifier({
+    required this.homeRepository,
     required this.loadProducts,
   }) : super([]);
 
@@ -24,5 +28,21 @@ class ProductsFirebaseNotifier extends StateNotifier<List<ProductEntity>> {
 
     state = products;
     return products;
+  }
+
+  Future<String> updateProductFirebase(
+      {required ProductEntity product, required String userId}) async {
+    final String message =
+        await homeRepository.updateProduct(product: product, userId: userId);
+
+    return message;
+  }
+
+  Future<String> deleteProductFirebase(
+      {required ProductEntity product, required String userId}) async {
+    final String message =
+        await homeRepository.deleteProduct(product: product, userId: userId);
+
+    return message;
   }
 }

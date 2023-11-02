@@ -1,4 +1,5 @@
 class ProductEntity {
+  String id;
   String name;
   num salePrice;
   String description;
@@ -7,6 +8,7 @@ class ProductEntity {
   String imageUrl;
 
   ProductEntity({
+    required this.id,
     required this.name,
     required this.salePrice,
     required this.description,

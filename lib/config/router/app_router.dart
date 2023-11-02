@@ -27,14 +27,40 @@ final appRouter = GoRouter(
           builder: (context, state) => const WelcomeScreen(),
         ),
         GoRoute(
-          name: HomeScreen.route,
-          path: 'home/:userId',
-          builder: (context, state) {
-            return HomeScreen(
-              userId: state.pathParameters['userId'] ?? '',
-            );
-          },
-        ),
+            name: HomeScreen.route,
+            path: 'home',
+            builder: (context, state) {
+              return const HomeScreen();
+            },
+            routes: [
+              GoRoute(
+                name: ProductsView.route,
+                path: 'products',
+                builder: (context, state) {
+                  return const ProductsView();
+                },
+                routes: [
+                  GoRoute(
+                    name: ProductScreen.route,
+                    path: ':productId',
+                    builder: (context, state) {
+                      final String productId =
+                          state.pathParameters['productId'] ?? '';
+                      return ProductScreen(
+                        productId: productId,
+                      );
+                    },
+                  ),
+                  // GoRoute(
+                  //   name: EmptyScreen.route,
+                  //   path: 'empty',
+                  //   builder: (context, state) {
+                  //     return const EmptyScreen();
+                  //   },
+                  // ),
+                ],
+              ),
+            ]),
       ],
     ),
     //  GoRoute(

@@ -1,59 +1,30 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_inventario/features/auth/presentation/providers/providers.dart';
-import 'package:gestion_inventario/features/home/domain/entities/product_entity.dart';
+import 'package:gestion_inventario/features/home/domain/domain.dart';
 import 'package:gestion_inventario/features/home/presentation/providers/providers.dart';
 import 'package:gestion_inventario/features/shared/shared.dart';
 
-class ProductScreen extends ConsumerStatefulWidget {
-  final String productId;
-  static const route = 'productId';
-  const ProductScreen({super.key, required this.productId});
+class EmptyScreen extends ConsumerStatefulWidget {
+  static const route = 'empty';
 
+  const EmptyScreen({
+    super.key,
+  });
   @override
-  ConsumerState<ProductScreen> createState() => _ProductScreenState();
+  @override
+  ConsumerState<EmptyScreen> createState() => _EmptyScreenState();
 }
 
-class _ProductScreenState extends ConsumerState<ProductScreen> {
+class _EmptyScreenState extends ConsumerState<EmptyScreen> {
   @override
   void initState() {
     super.initState();
-    if (widget.productId != 'new') {
-      ref.read(productFirebaseProvider.notifier).loadProductbyIdFirebase(
-          id: widget.productId, userId: ref.read(authProvider).user!.id);
-    }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final product = ref.watch(productFirebaseProvider).product;
-
-    if (product.id == '') {
-      return const CustomLoading();
-    }
-
-    return EditingScreen(
-      product: product,
-    );
-  }
-}
-
-class EditingScreen extends ConsumerWidget {
-  const EditingScreen({
-    super.key,
-    required this.product,
-  });
-
-  final ProductEntity product;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
         appBar: AppBar(),
         body: SingleChildScrollView(
@@ -71,19 +42,18 @@ class EditingScreen extends ConsumerWidget {
         floatingActionButton: FloatingActionButton(
           heroTag: 'save',
           onPressed: () async {
+            final userId = ref.read(authProvider).user!.id;
+
             await ref
                 .read(productFirebaseProvider.notifier)
-                .onFormSubmit(ref.read(authProvider).user!.id)
-                .then((value) {
-              ref
-                  .read(productFirebaseProvider.notifier)
-                  .loadProductbyIdFirebase(
-                      id: product.id, userId: ref.read(authProvider).user!.id);
-              ref
-                  .read(productsFirebaseProvider.notifier)
-                  .loadProductsFirebase(ref.read(authProvider).user!.id);
-              return customErrorMessage(context, value);
-            });
+                .createProduct(userId)
+                .then(
+                  (response) => customErrorMessage(context, response),
+                );
+
+            await ref
+                .read(productsFirebaseProvider.notifier)
+                .loadProductsFirebase(ref.read(authProvider).user!.id);
           },
           child: const Icon(Icons.save),
         ));
@@ -99,7 +69,6 @@ class _ProductImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
     return Stack(
       children: [
         AspectRatio(
@@ -107,36 +76,17 @@ class _ProductImage extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: Hero(
-              tag: product.id,
-              child: product.imageUrl == ''
-                  ? Image.asset(
-                      'assets/images/products/no-image.png',
-                    )
-                  : CachedNetworkImage(
-                      imageUrl: product.imageUrl,
-                      imageBuilder: (context, imageProvider) => Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: imageProvider,
-                            fit: BoxFit.cover,
-                            alignment: Alignment.center,
-                          ),
-                        ),
-                      ),
-                      placeholder: (context, url) => CircularProgressIndicator(
-                        color: colors.secondary,
-                      ),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
-                    ),
-            ),
+                tag: product.id,
+                child: Image.asset(
+                  'assets/images/products/no-image.png',
+                )),
           ),
         ),
         Positioned(
           right: 10,
           child: FloatingActionButton(
             heroTag: 'camera',
-            onPressed: () {},
+            onPressed: () async {},
             child: const Icon(
               Icons.camera_alt_outlined,
             ),
