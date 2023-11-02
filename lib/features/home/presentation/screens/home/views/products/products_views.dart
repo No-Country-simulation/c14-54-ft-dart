@@ -85,7 +85,7 @@ class _ProductDescription extends StatelessWidget {
               style: textStyle.titleMedium,
             ),
             Text(
-              product.salePrice.toString(),
+              product.salePrice.toStringAsFixed(2),
               style: textStyle.titleMedium,
             ),
             Text(
