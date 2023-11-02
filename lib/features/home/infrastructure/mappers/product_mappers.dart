@@ -4,8 +4,8 @@ class ProductMapper {
   static ProductEntity jsonCsvToEntity({required Map<String, dynamic> json}) =>
       ProductEntity(
         name: json["Nombre"] ?? "No especificado",
-        salePrice: setSalePrice(num.tryParse(json["Precio base"]) ?? 0,
-            num.tryParse(json["Precio venta"]) ?? 0),
+        salePrice: setSalePrice(num.tryParse(json["Precio base"].toString()) ?? 0,
+            num.tryParse(json["Precio venta"].toString()) ?? 0),
         description: json["Descripcion"] ?? "Sin descripcion",
         stock: json["Cantidad"] ?? 0.0,
         basePrice: json["Precio base"] ?? 0.0,
