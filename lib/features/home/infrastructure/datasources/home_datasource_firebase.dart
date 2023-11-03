@@ -112,9 +112,10 @@ class HomeDatasourceFirebase extends HomeDataSource {
 
   @override
   Future<String> addProduct(
-      {required ProductEntity product, required String userId}) {
+      {required ProductEntity product, required String userId}) async {
     try {
-      db.collection('users').doc(userId).collection('products').add({
+      DocumentReference docRef =
+          await db.collection('users').doc(userId).collection('products').add({
         'name': product.name,
         'description': product.description,
         'baseprice': product.basePrice,
@@ -123,7 +124,8 @@ class HomeDatasourceFirebase extends HomeDataSource {
         'imageUrl': product.imageUrl,
       });
 
-      return Future.value('Producto agregado con Exito');
+      String newProductId = docRef.id;
+      return newProductId;
     } on FirebaseException catch (e) {
       return Future.value(e.toString());
     }

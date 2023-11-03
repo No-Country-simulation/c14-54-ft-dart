@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_inventario/features/auth/presentation/providers/providers.dart';
@@ -48,8 +51,17 @@ class _EmptyScreenState extends ConsumerState<EmptyScreen> {
                 .read(productFirebaseProvider.notifier)
                 .createProduct(userId)
                 .then(
-                  (response) => customErrorMessage(context, response),
-                );
+              (productId) {
+                try {
+                  ref
+                      .read(productFirebaseProvider.notifier)
+                      .uploadImage(productId: productId, userId: userId);
+                  customErrorMessage(context, 'Producto creado exitosamente');
+                } catch (e) {
+                  customErrorMessage(context, e.toString());
+                }
+              },
+            );
 
             await ref
                 .read(productsFirebaseProvider.notifier)
@@ -60,7 +72,7 @@ class _EmptyScreenState extends ConsumerState<EmptyScreen> {
   }
 }
 
-class _ProductImage extends StatelessWidget {
+class _ProductImage extends ConsumerWidget {
   const _ProductImage({
     required this.product,
   });
@@ -68,7 +80,10 @@ class _ProductImage extends StatelessWidget {
   final ProductEntity product;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final image = ref.watch(productFirebaseProvider).imageUrl;
+    final colors = Theme.of(context).colorScheme;
+
     return Stack(
       children: [
         AspectRatio(
@@ -76,17 +91,48 @@ class _ProductImage extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: Hero(
-                tag: product.id,
-                child: Image.asset(
-                  'assets/images/products/no-image.png',
-                )),
+              tag: product.id,
+              child: image == ''
+                  ? Image.asset(
+                      'assets/images/products/no-image.png',
+                    )
+                  : image.contains('http')
+                      ? CachedNetworkImage(
+                          imageUrl: image,
+                          imageBuilder: (context, imageProvider) => Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: imageProvider,
+                                fit: BoxFit.cover,
+                                alignment: Alignment.center,
+                              ),
+                            ),
+                          ),
+                          placeholder: (context, url) =>
+                              CircularProgressIndicator(
+                            color: colors.secondary,
+                          ),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: Image.file(
+                            File(image),
+                            fit: BoxFit.cover,
+                            alignment: Alignment.center,
+                          ),
+                        ),
+            ),
           ),
         ),
         Positioned(
           right: 10,
           child: FloatingActionButton(
             heroTag: 'camera',
-            onPressed: () async {},
+            onPressed: () async {
+              ref.read(productFirebaseProvider.notifier).selectGalleryImage();
+            },
             child: const Icon(
               Icons.camera_alt_outlined,
             ),

@@ -188,10 +188,6 @@ class ProductFirebaseNotifier extends StateNotifier<ProductFirebaseState> {
         productId: productId,
         userId: userId,
       );
-      //   .then((url) {
-      // state = state.copyWith(
-      //   imageUrl: url,
-      // );
 
       state = state.copyWith(
           product: ProductEntity(
