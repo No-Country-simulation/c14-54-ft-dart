@@ -6,7 +6,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_inventario/features/auth/presentation/providers/providers.dart';
 import 'package:gestion_inventario/features/home/domain/domain.dart';
 import 'package:gestion_inventario/features/home/presentation/providers/providers.dart';
+import 'package:gestion_inventario/features/home/presentation/screens/screens.dart';
 import 'package:gestion_inventario/features/shared/shared.dart';
+import 'package:go_router/go_router.dart';
 
 class EmptyScreen extends ConsumerStatefulWidget {
   static const route = 'empty';
@@ -57,6 +59,9 @@ class _EmptyScreenState extends ConsumerState<EmptyScreen> {
                       .read(productFirebaseProvider.notifier)
                       .uploadImage(productId: productId, userId: userId);
                   customErrorMessage(context, 'Producto creado exitosamente');
+                  context.pushReplacementNamed(
+                    HomeScreen.route,
+                  );
                 } catch (e) {
                   customErrorMessage(context, e.toString());
                 }
@@ -182,7 +187,7 @@ class _BasePrice extends ConsumerWidget {
             thickness: 1,
           ),
           CustomTextFormField(
-            label: 'Actualizar Precio Base',
+            label: 'Precio Base',
             keyboardType: TextInputType.number,
             height: 20,
             validator: (value) {
@@ -245,7 +250,7 @@ class _Stock extends ConsumerWidget {
             thickness: 1,
           ),
           CustomTextFormField(
-              label: 'Actualizar Cantidad',
+              label: 'Cantidad',
               keyboardType: TextInputType.number,
               height: 20,
               validator: (value) {
@@ -297,7 +302,7 @@ class _Description extends ConsumerWidget {
             height: 20,
           ),
           CustomTextFormField(
-            label: 'Actualizar Descripción',
+            label: 'Descripción',
             keyboardType: TextInputType.text,
             height: 40,
             validator: (value) {
@@ -359,7 +364,7 @@ class _ProductTitle extends ConsumerWidget {
             ),
           ),
           CustomTextFormField(
-            label: 'Actualizar Nombre',
+            label: 'Nombre',
             keyboardType: TextInputType.text,
             height: 10,
             validator: (value) {
@@ -373,7 +378,7 @@ class _ProductTitle extends ConsumerWidget {
             },
           ),
           CustomTextFormField(
-            label: 'Actualizar Precio',
+            label: 'Precio',
             keyboardType: TextInputType.number,
             height: 10,
             validator: (value) {

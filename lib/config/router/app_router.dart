@@ -51,13 +51,6 @@ final appRouter = GoRouter(
                       );
                     },
                   ),
-                  // GoRoute(
-                  //   name: EmptyScreen.route,
-                  //   path: 'empty',
-                  //   builder: (context, state) {
-                  //     return const EmptyScreen();
-                  //   },
-                  // ),
                 ],
               ),
             ]),

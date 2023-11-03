@@ -1,3 +1,4 @@
+export 'package:gestion_inventario/features/home/presentation/screens/home/views/products/sell_screen.dart';
 export 'package:gestion_inventario/features/home/presentation/screens/home/views/products/empty_screen.dart';
 export 'package:gestion_inventario/features/home/presentation/screens/home/views/products/product_screen.dart';
 export 'package:gestion_inventario/features/home/presentation/screens/home/views/view_0.dart';

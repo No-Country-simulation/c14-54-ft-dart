@@ -1,11 +1,11 @@
 import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_inventario/features/auth/presentation/providers/providers.dart';
 import 'package:gestion_inventario/features/home/domain/entities/product_entity.dart';
 import 'package:gestion_inventario/features/home/presentation/providers/providers.dart';
+import 'package:gestion_inventario/features/home/presentation/screens/screens.dart';
 import 'package:gestion_inventario/features/shared/shared.dart';
 
 class ProductScreen extends ConsumerStatefulWidget {
@@ -65,29 +65,48 @@ class EditingScreen extends ConsumerWidget {
             ],
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          heroTag: 'save',
-          onPressed: () async {
-            final userId = ref.read(authProvider).user!.id;
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              FloatingActionButton(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) => const SellScreen());
+                },
+                heroTag: 'Sell',
+                child: const Icon(Icons.shopping_cart_outlined),
+              ),
+              FloatingActionButton(
+                heroTag: 'save',
+                onPressed: () async {
+                  final userId = ref.read(authProvider).user!.id;
 
-            await ref
-                .read(productFirebaseProvider.notifier)
-                .onFormSubmit(userId)
-                .then((value) {
-              ref
-                  .read(productFirebaseProvider.notifier)
-                  .loadProductbyIdFirebase(id: product.id, userId: userId);
-              ref
-                  .read(productFirebaseProvider.notifier)
-                  .uploadImage(productId: product.id, userId: userId);
-              ref
-                  .read(productsFirebaseProvider.notifier)
-                  .loadProductsFirebase(userId);
+                  await ref
+                      .read(productFirebaseProvider.notifier)
+                      .onFormSubmit(userId)
+                      .then((value) {
+                    ref
+                        .read(productFirebaseProvider.notifier)
+                        .loadProductbyIdFirebase(
+                            id: product.id, userId: userId);
+                    ref
+                        .read(productFirebaseProvider.notifier)
+                        .uploadImage(productId: product.id, userId: userId);
+                    ref
+                        .read(productsFirebaseProvider.notifier)
+                        .loadProductsFirebase(userId);
 
-              return customErrorMessage(context, value);
-            });
-          },
-          child: const Icon(Icons.save),
+                    return customErrorMessage(context, value);
+                  });
+                },
+                child: const Icon(Icons.save),
+              ),
+            ],
+          ),
         ));
   }
 }
@@ -127,9 +146,10 @@ class _ProductImage extends ConsumerWidget {
                               ),
                             ),
                           ),
-                          placeholder: (context, url) =>
-                              CircularProgressIndicator(
-                            color: colors.secondary,
+                          placeholder: (context, url) => Center(
+                            child: CircularProgressIndicator(
+                              color: colors.secondary,
+                            ),
                           ),
                           errorWidget: (context, url, error) =>
                               const Icon(Icons.error),
