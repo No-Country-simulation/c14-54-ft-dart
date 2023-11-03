@@ -38,4 +38,13 @@ class HomeRepositoryImpl extends HomeRepository {
       {required ProductEntity product, required String userId}) {
     return homeDataSource.addProduct(product: product, userId: userId);
   }
+
+  @override
+  Future<String> uploadProductPhoto(
+      {required String path,
+      required String productId,
+      required String userId}) {
+    return homeDataSource.uploadProductPhoto(
+        path: path, productId: productId, userId: userId);
+  }
 }

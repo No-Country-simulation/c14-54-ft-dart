@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:gestion_inventario/features/home/domain/domain.dart';
 import 'package:gestion_inventario/features/home/infrastructure/infrastructure.dart';
 
@@ -123,6 +126,39 @@ class HomeDatasourceFirebase extends HomeDataSource {
       return Future.value('Producto agregado con Exito');
     } on FirebaseException catch (e) {
       return Future.value(e.toString());
+    }
+  }
+
+  @override
+  Future<String> uploadProductPhoto({
+    required String path,
+    required String productId,
+    required String userId,
+  }) {
+    final FirebaseStorage storage = FirebaseStorage.instance;
+    try {
+      const String fileName = 'product_photo';
+      final ref = storage
+          .ref()
+          .child('$fileName/users/$userId/$productId')
+          .child(fileName);
+
+      final uploadTask = ref.putFile(File(path));
+      uploadTask.whenComplete(() async {
+        final url = await ref.getDownloadURL();
+        db
+            .collection('users')
+            .doc(userId)
+            .collection('products')
+            .doc(productId)
+            .update({
+          'imageUrl': url,
+        });
+        return url;
+      });
+      return Future.value('Carga exitosa');
+    } on FirebaseException catch (e) {
+      return Future.error(e);
     }
   }
 }

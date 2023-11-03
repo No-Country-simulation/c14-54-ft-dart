@@ -66,6 +66,15 @@ class HomeDatasourceCsv extends HomeDataSource {
     // TODO: implement addProduct
     throw UnimplementedError();
   }
+
+  @override
+  Future<String> uploadProductPhoto(
+      {required String path,
+      required String productId,
+      required String userId}) {
+    // TODO: implement uploadProductPhoto
+    throw UnimplementedError();
+  }
 }
 
 Map<String, dynamic> itemJson(valueList, List<String> claveList) {

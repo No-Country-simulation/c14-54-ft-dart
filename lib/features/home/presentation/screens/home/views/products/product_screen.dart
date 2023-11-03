@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,11 +25,6 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
       ref.read(productFirebaseProvider.notifier).loadProductbyIdFirebase(
           id: widget.productId, userId: ref.read(authProvider).user!.id);
     }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override
@@ -71,17 +68,22 @@ class EditingScreen extends ConsumerWidget {
         floatingActionButton: FloatingActionButton(
           heroTag: 'save',
           onPressed: () async {
+            final userId = ref.read(authProvider).user!.id;
+
             await ref
                 .read(productFirebaseProvider.notifier)
-                .onFormSubmit(ref.read(authProvider).user!.id)
+                .onFormSubmit(userId)
                 .then((value) {
               ref
                   .read(productFirebaseProvider.notifier)
-                  .loadProductbyIdFirebase(
-                      id: product.id, userId: ref.read(authProvider).user!.id);
+                  .loadProductbyIdFirebase(id: product.id, userId: userId);
+              ref
+                  .read(productFirebaseProvider.notifier)
+                  .uploadImage(productId: product.id, userId: userId);
               ref
                   .read(productsFirebaseProvider.notifier)
-                  .loadProductsFirebase(ref.read(authProvider).user!.id);
+                  .loadProductsFirebase(userId);
+
               return customErrorMessage(context, value);
             });
           },
@@ -90,7 +92,7 @@ class EditingScreen extends ConsumerWidget {
   }
 }
 
-class _ProductImage extends StatelessWidget {
+class _ProductImage extends ConsumerWidget {
   const _ProductImage({
     required this.product,
   });
@@ -98,8 +100,9 @@ class _ProductImage extends StatelessWidget {
   final ProductEntity product;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final colors = Theme.of(context).colorScheme;
+    final image = ref.watch(productFirebaseProvider).imageUrl;
     return Stack(
       children: [
         AspectRatio(
@@ -108,27 +111,37 @@ class _ProductImage extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             child: Hero(
               tag: product.id,
-              child: product.imageUrl == ''
+              child: image == ''
                   ? Image.asset(
                       'assets/images/products/no-image.png',
                     )
-                  : CachedNetworkImage(
-                      imageUrl: product.imageUrl,
-                      imageBuilder: (context, imageProvider) => Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: imageProvider,
+                  : image.contains('http')
+                      ? CachedNetworkImage(
+                          imageUrl: image,
+                          imageBuilder: (context, imageProvider) => Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: imageProvider,
+                                fit: BoxFit.cover,
+                                alignment: Alignment.center,
+                              ),
+                            ),
+                          ),
+                          placeholder: (context, url) =>
+                              CircularProgressIndicator(
+                            color: colors.secondary,
+                          ),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: Image.file(
+                            File(image),
                             fit: BoxFit.cover,
                             alignment: Alignment.center,
                           ),
                         ),
-                      ),
-                      placeholder: (context, url) => CircularProgressIndicator(
-                        color: colors.secondary,
-                      ),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
-                    ),
             ),
           ),
         ),
@@ -136,7 +149,9 @@ class _ProductImage extends StatelessWidget {
           right: 10,
           child: FloatingActionButton(
             heroTag: 'camera',
-            onPressed: () {},
+            onPressed: () {
+              ref.read(productFirebaseProvider.notifier).selectGalleryImage();
+            },
             child: const Icon(
               Icons.camera_alt_outlined,
             ),

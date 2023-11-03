@@ -2,8 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gestion_inventario/features/home/domain/domain.dart';
 import 'package:gestion_inventario/features/home/presentation/providers/providers.dart';
 
-final productsFirebaseProvider =
-    StateNotifierProvider<ProductsFirebaseNotifier, List<ProductEntity>>((ref) {
+final productsFirebaseProvider = StateNotifierProvider.autoDispose<
+    ProductsFirebaseNotifier, List<ProductEntity>>((ref) {
   final productRepository = ref.read(productRepositoryProvider);
 
   return ProductsFirebaseNotifier(

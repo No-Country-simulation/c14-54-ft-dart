@@ -22,4 +22,9 @@ abstract class HomeDataSource {
     required String id,
     required String userId,
   });
+  Future<String> uploadProductPhoto({
+    required String path,
+    required String productId,
+    required String userId,
+  });
 }
