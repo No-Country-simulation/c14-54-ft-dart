@@ -49,6 +49,31 @@ class ProductFirebaseNotifier extends StateNotifier<ProductFirebaseState> {
     return product;
   }
 
+  Future<String> sellProduct(
+      {required String userId, required DateTime date}) async {
+    final String result = await homeRepository.sentSell(
+      userId: userId,
+      productId: state.product.id,
+      quantity: state.sellCount.toString(),
+      date: date,
+    );
+    return result;
+  }
+
+  void onChangedQuantity(num quantity) {
+    state = state.copyWith(
+      name: state.name,
+      salePrice: state.salePrice,
+      basePrice: state.basePrice,
+      description: state.description,
+      stock: state.stock,
+      imageUrl: state.imageUrl,
+      sellCount: quantity,
+      id: state.id,
+      product: state.product,
+    );
+  }
+
   void onChangedName(String name) {
     state = state.copyWith(
       name: name,
@@ -180,6 +205,16 @@ class ProductFirebaseNotifier extends StateNotifier<ProductFirebaseState> {
     return image;
   }
 
+  Future<String> deleteProduct(String userId) async {
+    try {
+      final String result = await homeRepository.deleteProduct(
+          product: state.product, userId: userId);
+      return result;
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
   Future<String> uploadImage(
       {required String productId, required String userId}) async {
     try {
@@ -199,7 +234,6 @@ class ProductFirebaseNotifier extends StateNotifier<ProductFirebaseState> {
         basePrice: state.basePrice,
         imageUrl: state.imageUrl,
       ));
-      // });
 
       return await Future.value(url.toString());
     } catch (e) {
@@ -217,8 +251,12 @@ class ProductFirebaseState {
   final num basePrice;
   final String imageUrl;
   final String id;
+  final num? sellCount;
+  final DateTime? sellDate;
 
   ProductFirebaseState({
+    this.sellCount,
+    this.sellDate,
     required this.id,
     required this.product,
     required this.name,
@@ -230,6 +268,8 @@ class ProductFirebaseState {
   });
   ProductFirebaseState copyWith(
       {ProductEntity? product,
+      num? sellCount,
+      DateTime? sellDate,
       String? id,
       String? name,
       String? description,
@@ -246,6 +286,8 @@ class ProductFirebaseState {
       salePrice: salePrice ?? this.salePrice,
       basePrice: basePrice ?? this.basePrice,
       imageUrl: imageUrl ?? this.imageUrl,
+      sellCount: sellCount ?? this.sellCount,
+      sellDate: sellDate ?? this.sellDate,
     );
   }
 }

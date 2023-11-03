@@ -163,4 +163,34 @@ class HomeDatasourceFirebase extends HomeDataSource {
       return Future.error(e);
     }
   }
+
+  @override
+  Future<String> sentSell(
+      {required String userId,
+      required String productId,
+      required String quantity,
+      required DateTime date}) async {
+    try {
+      await db
+          .collection('users')
+          .doc(userId)
+          .collection('products')
+          .doc(productId)
+          .update({
+        'sellCount': FieldValue.increment(int.parse(quantity)),
+        'sellDate': date,
+        'stock': FieldValue.increment(-int.parse(quantity)),
+        'sellRegister': FieldValue.arrayUnion([
+          {
+            'quantity': int.parse(quantity),
+            'date': date,
+          }
+        ]),
+      });
+
+      return Future.value('Venta realizada');
+    } on FirebaseException catch (e) {
+      return Future.value(e.toString());
+    }
+  }
 }

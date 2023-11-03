@@ -46,7 +46,7 @@ class CustomBottomNavigatorBar extends ConsumerWidget {
 
           /// Profile
           DotNavigationBarItem(
-            icon: const Icon(Icons.person),
+            icon: const Icon(FontAwesomeIcons.robot),
           ),
         ],
       ),

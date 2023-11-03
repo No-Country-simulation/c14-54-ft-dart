@@ -47,4 +47,14 @@ class HomeRepositoryImpl extends HomeRepository {
     return homeDataSource.uploadProductPhoto(
         path: path, productId: productId, userId: userId);
   }
+
+  @override
+  Future<String> sentSell(
+      {required String userId,
+      required String productId,
+      required String quantity,
+      required DateTime date}) {
+    return homeDataSource.sentSell(
+        userId: userId, productId: productId, quantity: quantity, date: date);
+  }
 }

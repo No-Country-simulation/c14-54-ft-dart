@@ -27,4 +27,10 @@ abstract class HomeDataSource {
     required String productId,
     required String userId,
   });
+  Future<String> sentSell({
+    required String userId,
+    required String productId,
+    required String quantity,
+    required DateTime date,
+  });
 }

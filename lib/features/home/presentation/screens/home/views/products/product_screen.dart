@@ -7,6 +7,7 @@ import 'package:gestion_inventario/features/home/domain/entities/product_entity.
 import 'package:gestion_inventario/features/home/presentation/providers/providers.dart';
 import 'package:gestion_inventario/features/home/presentation/screens/screens.dart';
 import 'package:gestion_inventario/features/shared/shared.dart';
+import 'package:go_router/go_router.dart';
 
 class ProductScreen extends ConsumerStatefulWidget {
   final String productId;
@@ -80,30 +81,56 @@ class EditingScreen extends ConsumerWidget {
                 heroTag: 'Sell',
                 child: const Icon(Icons.shopping_cart_outlined),
               ),
-              FloatingActionButton(
-                heroTag: 'save',
-                onPressed: () async {
-                  final userId = ref.read(authProvider).user!.id;
+              Row(
+                children: [
+                  FloatingActionButton(
+                    heroTag: 'save',
+                    onPressed: () async {
+                      final userId = ref.read(authProvider).user!.id;
 
-                  await ref
-                      .read(productFirebaseProvider.notifier)
-                      .onFormSubmit(userId)
-                      .then((value) {
-                    ref
-                        .read(productFirebaseProvider.notifier)
-                        .loadProductbyIdFirebase(
-                            id: product.id, userId: userId);
-                    ref
-                        .read(productFirebaseProvider.notifier)
-                        .uploadImage(productId: product.id, userId: userId);
-                    ref
-                        .read(productsFirebaseProvider.notifier)
-                        .loadProductsFirebase(userId);
+                      await ref
+                          .read(productFirebaseProvider.notifier)
+                          .onFormSubmit(userId)
+                          .then((value) {
+                        ref
+                            .read(productFirebaseProvider.notifier)
+                            .loadProductbyIdFirebase(
+                                id: product.id, userId: userId);
+                        ref
+                            .read(productFirebaseProvider.notifier)
+                            .uploadImage(productId: product.id, userId: userId);
+                        ref
+                            .read(productsFirebaseProvider.notifier)
+                            .loadProductsFirebase(userId);
 
-                    return customErrorMessage(context, value);
-                  });
-                },
-                child: const Icon(Icons.save),
+                        return customErrorMessage(context, value);
+                      });
+                    },
+                    child: const Icon(Icons.save),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  FloatingActionButton(
+                    onPressed: () async {
+                      final userId = ref.read(authProvider).user!.id;
+                      await ref
+                          .read(productFirebaseProvider.notifier)
+                          .deleteProduct(userId)
+                          .then((value) {
+                        ref
+                            .read(productsFirebaseProvider.notifier)
+                            .loadProductsFirebase(userId);
+                        context.pushReplacementNamed(
+                          HomeScreen.route,
+                        );
+                        return customErrorMessage(context, value);
+                      });
+                    },
+                    heroTag: 'delete',
+                    child: const Icon(Icons.delete),
+                  ),
+                ],
               ),
             ],
           ),

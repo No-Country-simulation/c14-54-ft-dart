@@ -24,7 +24,10 @@ class ProductMapper {
   static ProductEntity mapFirestoreToEntity(
           {required Map<String, dynamic> map, required id}) =>
       ProductEntity(
+        sellCount: map["sellCount"],
+        sellDate: map["sellDate"],
         id: id,
+        sellRegister: map["sellRegister"],
         name: map["name"] ?? "No especificado",
         salePrice: map["saleprice"] ?? 0.0,
         description: map["description"] ?? "Sin descripcion",

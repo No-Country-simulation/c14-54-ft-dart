@@ -11,8 +11,10 @@ class CustomTextFormField extends StatelessWidget {
   final Function(String)? onFieldSubmitted;
   final Widget? subfixIcon;
   final double? height;
+  final double? marginBottom;
 
   const CustomTextFormField({
+    this.marginBottom,
     this.height,
     super.key,
     this.label,
@@ -36,7 +38,7 @@ class CustomTextFormField extends StatelessWidget {
     );
 
     return Container(
-      margin: const EdgeInsets.only(bottom: 20),
+      margin: EdgeInsets.only(bottom: marginBottom ?? 20),
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),
