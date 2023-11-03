@@ -1,4 +1,6 @@
+import 'package:gestion_inventario/features/data/api/entities/screens/Graficas.dart';
 import 'package:gestion_inventario/features/home/domain/domain.dart';
+import 'package:gestion_inventario/features/home/domain/entities/sale_entity.dart';
 
 class HomeRepositoryImpl extends HomeRepository {
   final HomeDataSource homeDataSource;
@@ -38,4 +40,15 @@ class HomeRepositoryImpl extends HomeRepository {
       {required ProductEntity product, required String userId}) {
     return homeDataSource.addProduct(product: product, userId: userId);
   }
+  
+  @override
+  Future<String> addSale({required SaleEntity product, required String userId}) {
+    // TODO: implement addSale
+    // throw UnimplementedError();
+    return homeDataSource.addSale(sale: product, userId: userId);
+  }
+
+
+  
+
 }

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gestion_inventario/features/home/domain/domain.dart';
+import 'package:gestion_inventario/features/home/domain/entities/sale_entity.dart';
 import 'package:gestion_inventario/features/home/infrastructure/infrastructure.dart';
 
 class HomeDatasourceFirebase extends HomeDataSource {
@@ -125,4 +126,40 @@ class HomeDatasourceFirebase extends HomeDataSource {
       return Future.value(e.toString());
     }
   }
+
+  @override
+  Future<String> addSale({required SaleEntity sale, required String userId}) {
+    // TODO: implement addSale
+    // throw UnimplementedError();
+    try {
+      db.collection('users').doc(userId).collection('sales').add({
+        'name': sale.name,
+        'date': sale.date,
+        'sale': sale.sale,
+      });
+
+      return Future.value('Sale add succes');
+    } on FirebaseException catch (e) {
+      return Future.value(e.toString());
+    }
+  }
+
+  //   @override
+  // Future<String> addSale(
+  //     {required  product, required String userId}) {
+  //   try {
+  //     db.collection('users').doc(userId).collection('products').add({
+  //       'name': product.name,
+  //       'description': product.description,
+  //       'baseprice': product.basePrice,
+  //       'saleprice': product.salePrice,
+  //       'stock': product.stock,
+  //       'imageUrl': product.imageUrl,
+  //     });
+
+  //     return Future.value('Producto agregado con Exito');
+  //   } on FirebaseException catch (e) {
+  //     return Future.value(e.toString());
+  //   }
+  // }
 }

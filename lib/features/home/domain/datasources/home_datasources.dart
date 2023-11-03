@@ -1,4 +1,5 @@
 import 'package:gestion_inventario/features/home/domain/entities/product_entity.dart';
+import 'package:gestion_inventario/features/home/domain/entities/sale_entity.dart';
 
 abstract class HomeDataSource {
   Future<List<ProductEntity>> getProducts(String url);
@@ -20,6 +21,11 @@ abstract class HomeDataSource {
   });
   Future<ProductEntity> loadProductbyId({
     required String id,
+    required String userId,
+  });
+
+    Future<String> addSale({
+    required SaleEntity sale,
     required String userId,
   });
 }

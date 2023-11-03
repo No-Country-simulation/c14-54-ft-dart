@@ -1,6 +1,7 @@
 import 'package:csv/csv.dart';
 import 'package:dio/dio.dart';
 import 'package:gestion_inventario/features/home/domain/domain.dart';
+import 'package:gestion_inventario/features/home/domain/entities/sale_entity.dart';
 import 'package:gestion_inventario/features/home/infrastructure/infrastructure.dart';
 
 class HomeDatasourceCsv extends HomeDataSource {
@@ -64,6 +65,12 @@ class HomeDatasourceCsv extends HomeDataSource {
   Future<String> addProduct(
       {required ProductEntity product, required String userId}) {
     // TODO: implement addProduct
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<String> addSale({required SaleEntity sale, required String userId}) {
+    // TODO: implement addSale
     throw UnimplementedError();
   }
 }
