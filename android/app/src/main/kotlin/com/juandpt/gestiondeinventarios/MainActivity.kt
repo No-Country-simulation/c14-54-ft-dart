@@ -1,4 +1,4 @@
-package com.example.gestion_inventario
+package com.juandpt.gestiondeinventarios
 
 import io.flutter.embedding.android.FlutterActivity
 
