@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyDRoj12WK_SpvQRh3cNDlNkPm9gyYLz_TI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>84757708200</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.gestionInventario</string>
+	<key>PROJECT_ID</key>
+	<string>gestiondeinventario-bb84e</string>
+	<key>STORAGE_BUCKET</key>
+	<string>gestiondeinventario-bb84e.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:84757708200:ios:eafe36210aee7075b7b19d</string>
+</dict>
+</plist>

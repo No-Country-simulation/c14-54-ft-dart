@@ -134,6 +134,10 @@ crypto
 2.19
 file:///C:/Users/ASUS/AppData/Local/Pub/Cache/hosted/pub.dev/crypto-3.0.3/
 file:///C:/Users/ASUS/AppData/Local/Pub/Cache/hosted/pub.dev/crypto-3.0.3/lib/
+csslib
+2.19
+file:///C:/Users/ASUS/AppData/Local/Pub/Cache/hosted/pub.dev/csslib-1.0.0/
+file:///C:/Users/ASUS/AppData/Local/Pub/Cache/hosted/pub.dev/csslib-1.0.0/lib/
 csv
 2.12
 file:///C:/Users/ASUS/AppData/Local/Pub/Cache/hosted/pub.dev/csv-5.1.1/
@@ -258,6 +262,10 @@ flutter_lints
 2.19
 file:///C:/Users/ASUS/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_lints-2.0.3/
 file:///C:/Users/ASUS/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_lints-2.0.3/lib/
+flutter_native_splash
+2.19
+file:///C:/Users/ASUS/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_native_splash-2.3.5/
+file:///C:/Users/ASUS/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_native_splash-2.3.5/lib/
 flutter_plugin_android_lifecycle
 2.19
 file:///C:/Users/ASUS/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.17/
@@ -306,6 +314,10 @@ hotreloader
 2.12
 file:///C:/Users/ASUS/AppData/Local/Pub/Cache/hosted/pub.dev/hotreloader-3.0.6/
 file:///C:/Users/ASUS/AppData/Local/Pub/Cache/hosted/pub.dev/hotreloader-3.0.6/lib/
+html
+2.19
+file:///C:/Users/ASUS/AppData/Local/Pub/Cache/hosted/pub.dev/html-0.15.4/
+file:///C:/Users/ASUS/AppData/Local/Pub/Cache/hosted/pub.dev/html-0.15.4/lib/
 http
 3.0
 file:///C:/Users/ASUS/AppData/Local/Pub/Cache/hosted/pub.dev/http-1.1.0/
@@ -598,6 +610,10 @@ typed_data
 2.17
 file:///C:/Users/ASUS/AppData/Local/Pub/Cache/hosted/pub.dev/typed_data-1.3.2/
 file:///C:/Users/ASUS/AppData/Local/Pub/Cache/hosted/pub.dev/typed_data-1.3.2/lib/
+universal_io
+2.17
+file:///C:/Users/ASUS/AppData/Local/Pub/Cache/hosted/pub.dev/universal_io-2.2.2/
+file:///C:/Users/ASUS/AppData/Local/Pub/Cache/hosted/pub.dev/universal_io-2.2.2/lib/
 uuid
 2.14
 file:///C:/Users/ASUS/AppData/Local/Pub/Cache/hosted/pub.dev/uuid-4.1.0/
