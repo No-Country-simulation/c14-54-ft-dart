@@ -20,4 +20,13 @@ keytool -genkey -v -keystore %userprofile%\upload-keystore.jks ^
         -alias juandpt
 
 ```
-
+![Image text](/assets/images/screens_demo/1.png)
+![Image text](/assets/images/screens_demo/2.png)
+![Image text](/assets/images/screens_demo/3.png)
+![Image text](/assets/images/screens_demo/4.png)
+![Image text](/assets/images/screens_demo/5.png)
+![Image text](/assets/images/screens_demo/6.png)
+![Image text](/assets/images/screens_demo/7.png)
+![Image text](/assets/images/screens_demo/8.png)
+![Image text](/assets/images/screens_demo/9.png)
+![Image text](/assets/images/screens_demo/10.png)
