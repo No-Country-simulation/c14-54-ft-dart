@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # c14-54-ft-dart
 Desarrollo móvil hibrido con dart utilizando Flutter 
 =======
@@ -20,4 +20,4 @@ keytool -genkey -v -keystore %userprofile%\upload-keystore.jks ^
         -alias juandpt
 
 ```
->>>>>>> 5f892381f36264ac2eb9be3ca8867d47d611974d
+
