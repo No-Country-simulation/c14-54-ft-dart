@@ -15,13 +15,14 @@ Desarrollo móvil hibrido con dart utilizando Flutter
 # link csv Pruebas:http://bit.ly/3Sc2v46
 
 # link figma: https://www.figma.com/file/1a1HNUsUOmgbVepVvhZv8M/DesignApp_manage?type=design&node-id=0-1&mode=design&t=kebJYkWRQYOHUerG-0
-```
-Firmar app en el path específico
-keytool -genkey -v -keystore %userprofile%\upload-keystore.jks ^
-        -storetype JKS -keyalg RSA -keysize 2048 -validity 10000 ^
-        -alias juandpt
 
-```
+
+# Link Video Demo:https://youtu.be/b-r6AC21QvA
+
+# Link Apk: https://drive.google.com/file/d/1wsbzrjofeaqR05FkZWD-fJnpRW6GP-YS/view?usp=sharing
+
+# Link Google play despliegue: https://play.google.com/store/apps/details?id=com.juandpt.gestiondeinventarios
+
 # Onboarding
 Da una breve descripción de que trata la aplicación.
 
