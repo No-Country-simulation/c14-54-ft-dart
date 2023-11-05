@@ -3,6 +3,8 @@
 Desarrollo móvil hibrido con dart utilizando Flutter 
 =======
 # gestion_inventario
+Simplifica la gestión de inventarios con nuestra app: importa desde Excel, guarda tus datos en la nube, administra productos, realiza ventas, y accede a análisis en tiempo real. Incluye gráficos de desempeño, calculadora de rentabilidad y un chat con IA para recomendaciones empresariales, todo diseñado para impulsar tu éxito en el negocio.
+
 
  Proyecto para simulación
 
